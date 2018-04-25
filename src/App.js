@@ -1,19 +1,22 @@
 import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import rootReducer from './reducers';
+import Board from './components/Board';
 import logo from './logo.svg';
 import './App.css';
+
+const store = createStore(rootReducer, composeWithDevTools());
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Kanban board</h1>
-        </header>
-        <p className="App-intro">
-          Tutaj w przyszłości zobaczysz projekt zaliczeniowy na przedmiot "Programowanie aplikacji webowych SPA"
-        </p>
-      </div>
+      <Provider store={store}>
+        <div className="App">
+          <Board />
+        </div>
+      </Provider>
     );
   }
 }
