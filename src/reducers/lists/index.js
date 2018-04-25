@@ -1,4 +1,5 @@
 import uniqueId from 'lodash/fp/uniqueId';
+import { ADD_NEW_LIST } from '../../actions/types';
 
 const initialId = uniqueId('list_');
 
@@ -13,7 +14,7 @@ const initialState = {
 
 export default function counter(state = initialState, action) {
   switch (action.type) {
-    case 'ADD_NEW_LIST': {
+    case ADD_NEW_LIST: {
       const { name } = action.payload;
       const id = uniqueId('list_');
 
