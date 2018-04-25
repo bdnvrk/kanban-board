@@ -1,11 +1,32 @@
+import uniqueId from 'lodash/fp/uniqueId';
+
+const initialId = uniqueId('list_');
+
 const initialState = {
-  field: 'testValue',
+  [initialId]: {
+    id: initialId,
+    name: 'Twoja pierwsza lista',
+    order: 0,
+    tasks: [],
+  },
 };
 
 export default function counter(state = initialState, action) {
   switch (action.type) {
-    case 'ACTION':
-      return 'test action value';
+    case 'ADD_NEW_LIST': {
+      const { name } = action.payload;
+      const id = uniqueId('list_');
+
+      return {
+        ...state,
+        [id]: {
+          id,
+          name,
+          order: state.length,
+          tasks: [],
+        },
+      };
+    }
     default:
       return state
   }
