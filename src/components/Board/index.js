@@ -6,12 +6,16 @@ import { addNewList } from '../../actions';
 import List from '../List';
 import Header from '../Header';
 import './style.css';
+import * as firebase from 'firebase';
+import { auth, provider } from '../../helperFunctions/client';
 
 
 class Board extends Component {
   constructor() {
     super();
     this.textInput = React.createRef();
+    this.fbFirebaseAuth = this.fbFirebaseAuth.bind(this);
+    this.fbFirebaseLogout = this.fbFirebaseLogout.bind(this);
     this.state = {
       showModal: false,
     };
@@ -26,11 +30,36 @@ class Board extends Component {
     this.props.addNewList(value);
     this.toggleModal();
   }
+  fbFirebaseAuth = (e) => {
+    e.preventDefault();
+    
+    firebase.auth().signInWithPopup(provider)
+      .then((res) => {
+        console.log(`logged in as ${JSON.stringify(res.user)}`)
+      }).catch((err) => {
+        console.log(err.code)
+      })
+  }
+
+  fbFirebaseLogout = (e) => {
+    e.preventDefault();
+
+    firebase.auth().signOut()
+      .then(() => {
+        console.log('log off')
+      }).catch(function(err) {
+        console.log('error code')
+      });
+  }
+
   render() {
     const { lists } = this.props;
     return (
       <div className="container">
-        <Header />
+        <Header 
+          authFunction={this.fbFirebaseAuth} 
+          logoffFunction={this.fbFirebaseLogout}
+        />
         <Button 
           bsStyle="primary" 
           onClick={this.toggleModal} 
