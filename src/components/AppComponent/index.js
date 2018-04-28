@@ -27,11 +27,11 @@ class AppComponent extends Component {
       })
   }
 
+  componentDidMount() {
+    this.firebaseDatabaseConnectionTest()
+  }
+
   render() {
-    if (!this.state.isConnected) {
-      this.firebaseDatabaseConnectionTest()
-    }
-    
     return (
       <div className="App">
         {this.state.isConnected ? 'connected' : 'not connected'}
