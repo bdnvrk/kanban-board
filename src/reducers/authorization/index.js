@@ -4,7 +4,8 @@ import { AUTHORIZE_USER, LOG_OUT, REQUEST_AUTHORIZATION, PROMPT_ERROR } from '..
 const initialState = {
   user: {
     loggedIn: false,
-    authorizationOngoing: false
+    authorizationOngoing: false,
+    userData: {}
   }
 };
 
@@ -38,6 +39,10 @@ export default function autorization(state = initialState, action) {
     case PROMPT_ERROR: {
       return {
         ...state,
+        user: {
+          authorizationOngoing: false,
+          loggedIn: false
+        },
         error: action.error
       }
     }

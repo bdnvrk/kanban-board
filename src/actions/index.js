@@ -1,6 +1,6 @@
 import * as types from './types';
 import * as firebase from 'firebase';
-import { auth, provider } from '../helperFunctions/client';
+import { provider } from '../helperFunctions/client';
 
 export const addNewList = (name) => ({
   type: types.ADD_NEW_LIST,

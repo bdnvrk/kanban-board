@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Navbar, Button} from 'react-bootstrap';
 import { startAuthorization, requestLogout } from '../../actions'
-//import { start } from 'repl';
+import './style.css';
 
 class Header extends Component {
   constructor() {
@@ -16,11 +16,28 @@ class Header extends Component {
   }
 
   logoffFunction(e) {
-    //e.preventDefault();
+    e.preventDefault();
     this.props.requestLogout();
+  }  
+
+  renderLoginButton() {
+    return (
+      <Button onClick={this.authFunction}>
+        Zaloguj
+      </Button>
+    );
+  }
+
+  renderLogutButton() {
+    return (
+      <Button onClick={this.logoffFunction}>
+        Wyloguj
+      </Button>
+    );
   }
 
   render() {
+    const { isUserAuthorized, userName } = this.props;
     return (
       <Navbar> 
         <Navbar.Header>
@@ -28,23 +45,28 @@ class Header extends Component {
             <a href="#home">Kanban Board</a>
           </Navbar.Brand>
         </Navbar.Header>
-        <Nav>
-          <NavItem eventKey={1} href="#" onClick={this.authFunction}>
-            Login
-          </NavItem>
-          <NavItem eventKey={2} href="#" onClick={this.logoffFunction}>
-            Logout
-          </NavItem>
-        </Nav>
-        
+        <Navbar.Collapse>
+          <Navbar.Form pullRight>
+            { isUserAuthorized ? this.renderLogutButton() : this.renderLoginButton() }
+          </Navbar.Form>
+          <Navbar.Text pullRight>
+            { isUserAuthorized ? `Jesteś zalogowany jako: ${ userName }` : '' }
+          </Navbar.Text>
+        </Navbar.Collapse>
       </Navbar>
     )
   }
 }
+const mapStateToProps = (state) => (
+  {
+    isUserAuthorized: state.authorization.user.loggedIn,
+    userName: state.authorization.user.userData.displayName 
+  }
+)
 
 const mapDispatchToProps = {
   startAuthorization,
   requestLogout
 }
 
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

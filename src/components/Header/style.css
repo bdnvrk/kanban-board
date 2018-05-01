@@ -1,0 +1,4 @@
+/* Hack for pullRight styling in boostrap lib*/
+.navbar-right {
+  margin-right: 0;
+}
