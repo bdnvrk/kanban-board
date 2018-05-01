@@ -27,8 +27,7 @@ const requestAuthorization = () => ({
 
 export const startAuthorization = () => {
   return dispatch => {
-    dispatch(requestAuthorization);
-  
+    dispatch(requestAuthorization());
     return firebase.auth().signInWithPopup(provider)
       .then((res) => {
         dispatch(authorizeUser(res.user));
@@ -39,13 +38,12 @@ export const startAuthorization = () => {
 }
 
 export const requestLogout = () => {
-  // return dispatch => {
-  //   return firebase.auth().signOut()
-  //     .then(() => {
-  //       dispatch(logOut);
-  //     }).catch((err) => {
-  //       dispatch(promptError(err.code))
-  //     });
-  // }
-  return dispatch => { dispatch(logOut) }
+  return dispatch => {
+    return firebase.auth().signOut() 
+      .then(() => {
+        dispatch(logOut());
+      }).catch((err) => {
+        dispatch(promptError(err.code))
+      });
+  }
 }

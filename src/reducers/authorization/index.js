@@ -30,7 +30,8 @@ export default function autorization(state = initialState, action) {
       return {
         ...state,
         user: {
-          loggedIn: false
+          authorizationOngoing: false,
+          loggedIn: !state.user.loggedIn
         }
       }
     }

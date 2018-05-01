@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Navbar, Nav, NavItem } from 'react-bootstrap';
-import { startAuthorization, requestLogout,logOut } from '../../actions'
+import { startAuthorization, requestLogout } from '../../actions'
+//import { start } from 'repl';
 
 class Header extends Component {
   constructor() {
@@ -9,19 +10,16 @@ class Header extends Component {
     this.logoffFunction = this.logoffFunction.bind(this);
     this.authFunction = this.authFunction.bind(this);
   }
-  authFunction (e) {
-    const { dispatch } = this.props;
+  authFunction(e) {
     e.preventDefault();
-
-    dispatch(startAuthorization())
+    this.props.startAuthorization();
   }
 
   logoffFunction(e) {
-    const { dispatch } = this.props;
-    e.preventDefault();
-
-    dispatch(logOut);
+    //e.preventDefault();
+    this.props.requestLogout();
   }
+
   render() {
     return (
       <Navbar> 
@@ -44,4 +42,9 @@ class Header extends Component {
   }
 }
 
-export default connect()(Header);
+const mapDispatchToProps = {
+  startAuthorization,
+  requestLogout
+}
+
+export default connect(null, mapDispatchToProps)(Header);
