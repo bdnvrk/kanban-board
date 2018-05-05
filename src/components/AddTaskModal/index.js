@@ -85,15 +85,24 @@ const AddTaskModal = ({ showModal, addNewTask, toggleModal, handleSubmit, listId
   );
 };
 
-// const validate = values => {
-//   const errors = {}
-//   if (!values.name) {
-//     errors.name = 'Required'
-//   }
-//   return errors
-// }
+const validate = values => {
+  const errors = {}
+  if (!values.name) {
+    errors.name = 'Podaj nazwę taska'
+  }
+  if (!values.description) {
+    errors.name = 'Wypełnij opis taska'
+  }
+  if (!values.priority) {
+    errors.name = 'Wybierz priorytet'
+  }
+  if (!values.deadline) {
+    errors.name = 'Wybierz datę realizacji'
+  }
+  return errors
+}
 
 export default reduxForm({
   form: 'newTaskData',
-  //validate
+  validate
 })(AddTaskModal)
