@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { Button, Modal, ControlLabel, FormGroup, FormControl, Col, Form } from 'react-bootstrap';
+import React from 'react';
+import { Button, Modal, ControlLabel, FormGroup, Col, Form } from 'react-bootstrap';
 import uniqueId from 'lodash/fp/uniqueId';
 import { Field, reduxForm } from 'redux-form'
 
