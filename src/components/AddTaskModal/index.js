@@ -1,57 +1,99 @@
 import React, { Component } from 'react';
 import { Button, Modal, ControlLabel, FormGroup, FormControl, Col, Form } from 'react-bootstrap';
+import uniqueId from 'lodash/fp/uniqueId';
+import { Field, reduxForm } from 'redux-form'
 
-const AddTaskModal = ({ showModal, submitHandler, toggleModal }) => (
-  <Modal show={showModal} onHide={toggleModal}>
-    <Modal.Header closeButton>
-      <Modal.Title>Dodaj nowe zadanie</Modal.Title>
-    </Modal.Header>
-    <Modal.Body>
-      <Form horizontal>
-        <FormGroup>
-          <Col componentClass={ControlLabel} sm={3}>
-            Nazwa
-          </Col>
-          <Col sm={9}>
-            <FormControl type="text" />
-          </Col>
-        </FormGroup>
-        <FormGroup>
-          <Col componentClass={ControlLabel} sm={3}>
-            Opis
-          </Col>
-          <Col sm={9}>
-            <FormControl componentClass="textarea" type="text" />
-          </Col>
-        </FormGroup>
-        <FormGroup>
-          <Col componentClass={ControlLabel} sm={3}>
-            Priorytet
-          </Col>
-          <Col sm={9}>
-            <FormControl componentClass="select" type="text">
-              <option value="select">Niski</option>
-              <option value="other">Średni</option>
-              <option value="other">Wysoki</option>
-              <option value="other">Natychmiastowy</option>
-            </FormControl>
-          </Col>
-        </FormGroup>
-        <FormGroup>
-          <Col componentClass={ControlLabel} sm={3}>
-            Termin wykoniania
-          </Col>
-          <Col sm={9}>
-            <FormControl type="date" />
-          </Col>
-        </FormGroup>
-      </Form>
-    </Modal.Body>
-    <Modal.Footer>
-      <Button onClick={submitHandler}>Dodaj</Button>
-      <Button onClick={toggleModal}>Anuluj</Button>
-    </Modal.Footer>
-  </Modal>
-);
+const AddTaskModal = ({ showModal, addNewTask, toggleModal, handleSubmit, listId, reset }) => {
+  const toggle = () => {
+    toggleModal();
+    reset();
+  };
+  const onSubmit = handleSubmit(data => {
+    const taskId = uniqueId('task_');
+    addNewTask(listId, taskId, data);
+    toggle();
+  });
+  return (
+    <form onSubmit={onSubmit}>
+      <Modal show={showModal} onHide={toggle}>
+        <Modal.Header closeButton>
+          <Modal.Title>Dodaj nowe zadanie</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <Form horizontal>
+            <FormGroup>
+              <Col componentClass={ControlLabel} sm={3}>
+                Nazwa
+              </Col>
+              <Col sm={9}>
+                <Field
+                  name="name"
+                  component="input"
+                  type="text"
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup>
+              <Col componentClass={ControlLabel} sm={3}>
+                Opis
+              </Col>
+              <Col sm={9}>
+                <Field
+                  name="description"
+                  component="textarea"
+                  type="text"
+                />
+              </Col>
+            </FormGroup>
+            <FormGroup>
+              <Col componentClass={ControlLabel} sm={3}>
+                Priorytet
+              </Col>
+              <Col sm={9}>
+                <Field
+                  name="priority"
+                  component="select"
+                  type="text"
+                >
+                  <option value="low">Niski</option>
+                  <option value="medium">Średni</option>
+                  <option value="high">Wysoki</option>
+                  <option value="urgent">Natychmiastowy</option>
+                </Field>
+              </Col>
+            </FormGroup>
+            <FormGroup>
+              <Col componentClass={ControlLabel} sm={3}>
+                Termin wykoniania
+              </Col>
+              <Col sm={9}>
+                <Field
+                  name="deadline"
+                  component="input"
+                  type="date"
+                />
+              </Col>
+            </FormGroup>
+          </Form>
+        </Modal.Body>
+        <Modal.Footer>
+          <Button onClick={onSubmit} type="submit">Dodaj</Button>
+          <Button onClick={toggle}>Anuluj</Button>
+        </Modal.Footer>
+      </Modal>
+    </form>
+  );
+};
 
-export default AddTaskModal;
+// const validate = values => {
+//   const errors = {}
+//   if (!values.name) {
+//     errors.name = 'Required'
+//   }
+//   return errors
+// }
+
+export default reduxForm({
+  form: 'newTaskData',
+  //validate
+})(AddTaskModal)
