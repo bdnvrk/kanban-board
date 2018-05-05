@@ -1,0 +1,12 @@
+.menu {
+  display: inline-block;
+  float: right;
+}
+
+.menu > .dropdown > button {
+  padding: 0;
+}
+
+.menu .caret {
+  display: none; /* remove default bootstrap caret from dropdown */
+}

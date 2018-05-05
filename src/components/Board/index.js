@@ -2,11 +2,10 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import map from 'lodash/fp/map';
 import { Button, Modal } from 'react-bootstrap';
-import { addNewList } from '../../actions';
+import { addNewList, addNewTask } from '../../actions';
 import List from '../List';
 import Header from '../Header';
 import './style.css';
-
 
 class Board extends Component {
   constructor() {
@@ -27,7 +26,7 @@ class Board extends Component {
     this.toggleModal();
   }
   render() {
-    const { lists } = this.props;
+    const { lists, addNewTask } = this.props;
     return (
       <div className="container">
         <Header />
@@ -40,7 +39,7 @@ class Board extends Component {
         <div className="row">
           {map(list => {
             return (
-              <List key={list.id} name={list.name} />
+              <List addNewTask={addNewTask} key={list.id} id={list.id} name={list.name} tasks={list.tasks} />
             );
           })(lists)}   
         </div>
@@ -68,6 +67,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
   addNewList,
+  addNewTask,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);
