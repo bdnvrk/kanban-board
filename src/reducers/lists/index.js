@@ -49,15 +49,14 @@ export default (state = initialState, action) => {
       const { listId, taskId } = action.payload;
       const index = findIndex(list => list.id === listId)(state);
       const listData = state[index];
-      const tasks = listData.tasks;
 
-      const copied = [...state];
-      copied[index] = {
+      const updatedState = state.slice();
+      updatedState[index] = {
         ...listData,
-        tasks: [...tasks, taskId],
+        tasks: [...listData.tasks, taskId],
       };
 
-      return copied;
+      return updatedState;
     }
     default:
       return state
