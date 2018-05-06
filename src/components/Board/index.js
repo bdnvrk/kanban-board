@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import values from 'lodash/fp/values';
-import sortBy from 'lodash/fp/sortBy';
 import { Button, Modal } from 'react-bootstrap';
 import { addNewList, addNewTask, editList } from '../../actions';
 import List from '../List';

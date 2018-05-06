@@ -1,5 +1,4 @@
 import uniqueId from 'lodash/fp/uniqueId';
-import mapValues from 'lodash/fp/mapValues';
 import findIndex from 'lodash/fp/findIndex';
 import { ADD_NEW_LIST, ADD_NEW_TASK, EDIT_LIST } from '../../actions/types';
 
@@ -31,7 +30,7 @@ export default (state = initialState, action) => {
     case EDIT_LIST: {
       const { id, listData: { name, order: newOrder } } = action.payload;
     
-      const target = parseInt(newOrder) - 1;
+      const target = parseInt(newOrder, 10) - 1;
       const index = findIndex(list => list.id === id)(state);
       const listData = state[index];
 

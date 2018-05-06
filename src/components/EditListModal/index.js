@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
-import uniqueId from 'lodash/fp/uniqueId';
 import { Field, reduxForm } from 'redux-form';
 import FieldWithErrors from '../FieldWithErrors';
-import { isNotEmpty, maxLength20, isNotPastDate } from '../../validation';
+import { isNotEmpty, maxLength20 } from '../../validation';
 
 class EditListModal extends Component {
   render() {
