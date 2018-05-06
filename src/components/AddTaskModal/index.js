@@ -1,99 +1,82 @@
-import React from 'react';
-import { Button, Modal, ControlLabel, FormGroup, Col, Form } from 'react-bootstrap';
+import React, {Component} from 'react';
+import { Button, Modal, Form } from 'react-bootstrap';
 import uniqueId from 'lodash/fp/uniqueId';
-import { Field, reduxForm } from 'redux-form'
+import { Field, reduxForm } from 'redux-form';
+import FieldWithErrors from '../FieldWithErrors';
+import { isNotEmpty, maxLength20, isNotPastDate } from '../../validation';
 
-const AddTaskModal = ({ showModal, addNewTask, toggleModal, handleSubmit, listId, reset }) => {
-  const toggle = () => {
-    toggleModal();
-    reset();
-  };
-  const onSubmit = handleSubmit(data => {
-    const taskId = uniqueId('task_');
-    addNewTask(listId, taskId, data);
-    toggle();
-  });
-  return (
-    <form onSubmit={onSubmit}>
-      <Modal show={showModal} onHide={toggle}>
-        <Modal.Header closeButton>
-          <Modal.Title>Dodaj nowe zadanie</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form horizontal>
-            <FormGroup>
-              <Col componentClass={ControlLabel} sm={3}>
-                Nazwa
-              </Col>
-              <Col sm={9}>
-                <Field
-                  name="name"
-                  component="input"
-                  type="text"
-                />
-              </Col>
-            </FormGroup>
-            <FormGroup>
-              <Col componentClass={ControlLabel} sm={3}>
-                Opis
-              </Col>
-              <Col sm={9}>
-                <Field
-                  name="description"
-                  component="textarea"
-                  type="text"
-                />
-              </Col>
-            </FormGroup>
-            <FormGroup>
-              <Col componentClass={ControlLabel} sm={3}>
-                Priorytet
-              </Col>
-              <Col sm={9}>
-                <Field
-                  name="priority"
-                  component="select"
-                  type="text"
-                >
-                  <option value="low">Niski</option>
-                  <option value="medium">Średni</option>
-                  <option value="high">Wysoki</option>
-                  <option value="urgent">Natychmiastowy</option>
-                </Field>
-              </Col>
-            </FormGroup>
-            <FormGroup>
-              <Col componentClass={ControlLabel} sm={3}>
-                Termin wykoniania
-              </Col>
-              <Col sm={9}>
-                <Field
-                  name="deadline"
-                  component="input"
-                  type="date"
-                />
-              </Col>
-            </FormGroup>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button onClick={onSubmit} type="submit">Dodaj</Button>
-          <Button onClick={toggle}>Anuluj</Button>
-        </Modal.Footer>
-      </Modal>
-    </form>
-  );
+class AddTaskModal extends Component {
+  componentWillReceiveProps(nextProps) {
+    if (this.props.showModal !== nextProps.showModal) {
+      this.props.initialize();
+    }
+  }
+  render() {
+    const { showModal, addNewTask, toggleModal, handleSubmit, listId, reset } = this.props;
+    const onSubmit = handleSubmit(data => {
+      const taskId = uniqueId('task_');
+      addNewTask(listId, taskId, data);
+      toggleModal();
+      reset();
+    });
+    return (
+      <form onSubmit={onSubmit}>
+        <Modal show={showModal} onHide={toggleModal}>
+          <Modal.Header closeButton>
+            <Modal.Title>Dodaj nowe zadanie</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form horizontal>
+              <Field
+                label="Nazwa"
+                name="name"
+                component={FieldWithErrors}
+                type="text"
+                validate={[isNotEmpty, maxLength20]}
+              />
+              <Field
+                label="Opis"
+                name="description"
+                component={FieldWithErrors}
+                componentClass="textarea"
+                type="text"
+                validate={[isNotEmpty]}
+              />
+              <Field
+                label="Priorytet"
+                name="priority"
+                component={FieldWithErrors}
+                componentClass="select"
+                type="text"
+                validate={[isNotEmpty]}
+              >
+                <option value="low">Niski</option>
+                <option value="medium">Średni</option>
+                <option value="high">Wysoki</option>
+                <option value="urgent">Natychmiastowy</option>
+              </Field>
+              <Field
+                label="Termin wykoniania"
+                name="deadline"
+                component={FieldWithErrors}
+                type="date"
+                validate={[isNotEmpty, isNotPastDate]}
+              />
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button onClick={onSubmit} type="submit">Dodaj</Button>
+            <Button onClick={toggleModal}>Anuluj</Button>
+          </Modal.Footer>
+        </Modal>
+      </form>
+    );
+  } 
 };
-
-// const validate = values => {
-//   const errors = {}
-//   if (!values.name) {
-//     errors.name = 'Required'
-//   }
-//   return errors
-// }
 
 export default reduxForm({
   form: 'newTaskData',
-  //validate
+  enableReinitialize: true,
+  destroyOnUnmount: false,
+  keepDirtyOnReinitialize: true,
 })(AddTaskModal)
