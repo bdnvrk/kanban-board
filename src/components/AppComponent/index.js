@@ -5,6 +5,8 @@ import { createStore } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from '../../reducers';
 import Board from '../Board';
+import Header from '../Header';
+import Footer from '../Footer';
 import './style.css';
 
 const store = createStore(rootReducer, composeWithDevTools());
@@ -42,8 +44,9 @@ class AppComponent extends Component {
     return (
       <Provider store={store}>
         <div className="App">
+          <Header />
           <Board />
-          {this.state.isConnected ? 'connected' : 'not connected'}
+          <Footer />
         </div>
       </Provider>
     );
