@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import map from 'lodash/fp/map';
 import { Button, Modal } from 'react-bootstrap';
-import { addNewList, addNewTask } from '../../actions';
+import { addNewList, addNewTask, editList } from '../../actions';
 import List from '../List';
 import Header from '../Header';
 import './style.css';
@@ -26,7 +25,8 @@ class Board extends Component {
     this.toggleModal();
   }
   render() {
-    const { lists, addNewTask } = this.props;
+    const { lists, addNewTask, editList } = this.props;
+    const listsNumber = lists.length;
     return (
       <div className="container">
         <Header />
@@ -37,11 +37,20 @@ class Board extends Component {
             Dodaj nową listę
         </Button>
         <div className="row">
-          {map(list => {
+          {lists.map((list, index) => {
             return (
-              <List addNewTask={addNewTask} key={list.id} id={list.id} name={list.name} tasks={list.tasks} />
+              <List 
+                addNewTask={addNewTask} 
+                editList={editList} 
+                key={list.id} 
+                id={list.id} 
+                name={list.name} 
+                order={index} 
+                listsNumber={listsNumber}
+                tasks={list.tasks} 
+              />
             );
-          })(lists)}   
+          })}   
         </div>
 
         <Modal show={this.state.showModal} onHide={this.toggleModal}>
@@ -68,6 +77,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   addNewList,
   addNewTask,
+  editList,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);

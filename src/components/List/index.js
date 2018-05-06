@@ -6,22 +6,29 @@ import Panel from 'react-bootstrap/lib/Panel';
 import { DropdownButton, MenuItem, Label } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import AddTaskModal from '../AddTaskModal';
+import EditListModal from '../EditListModal';
 import './style.css';
 
 class List extends Component {
   constructor() {
     super();
     this.state = {
-      showModal: false,
+      showAddModal: false,
+      showEditModal: false,
     };
   }
-  toggleModal = () => {
+  toggleAddModal = () => {
     this.setState(state => ({
-      showModal: !state.showModal,
+      showAddModal: !state.showAddModal,
+    }));
+  }
+  toggleEditModal = () => {
+    this.setState(state => ({
+      showEditModal: !state.showEditModal,
     }));
   }
   render() {
-    const { name, id, addNewTask, tasksData, tasks } = this.props;
+    const { name, id, addNewTask, tasksData, tasks, editList, order, listsNumber } = this.props;
     return (
       <div className="col-xs-3 list">
         <Panel>
@@ -34,8 +41,8 @@ class List extends Component {
                 bsStyle="link"
                 title={<FontAwesome name="bars" />}
               >
-                <MenuItem eventKey="1" onClick={this.toggleModal}>Dodaj zadanie</MenuItem>
-                <MenuItem eventKey="2">Edytuj</MenuItem>
+                <MenuItem eventKey="1" onClick={this.toggleAddModal}>Dodaj zadanie</MenuItem>
+                <MenuItem eventKey="2" onClick={this.toggleEditModal}>Edytuj</MenuItem>
               </DropdownButton>
             </div>
           </Panel.Heading>
@@ -53,7 +60,22 @@ class List extends Component {
             </ul>
           </Panel.Body>
         </Panel>
-        <AddTaskModal listId={id} showModal={this.state.showModal} addNewTask={addNewTask} toggleModal={this.toggleModal}/>
+        <AddTaskModal 
+          listId={id} 
+          showModal={this.state.showAddModal} 
+          addNewTask={addNewTask} 
+          toggleModal={this.toggleAddModal}
+        />
+        {this.state.showEditModal && 
+          <EditListModal 
+            initialValues={{ name, order: order + 1 }} 
+            listsNumber={listsNumber}
+            listId={id} 
+            showModal={this.state.showEditModal} 
+            editList={editList} 
+            toggleModal={this.toggleEditModal}
+          />
+        }
       </div>
     );
   }
