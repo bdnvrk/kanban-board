@@ -26,6 +26,7 @@ class Board extends Component {
   }
   render() {
     const { lists, addNewTask, editList } = this.props;
+    const listsNumber = lists.length;
     return (
       <div className="container">
         <Header />
@@ -45,6 +46,7 @@ class Board extends Component {
                 id={list.id} 
                 name={list.name} 
                 order={index} 
+                listsNumber={listsNumber}
                 tasks={list.tasks} 
               />
             );

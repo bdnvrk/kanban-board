@@ -5,6 +5,13 @@ import FieldWithErrors from '../FieldWithErrors';
 import { isNotEmpty, maxLength20 } from '../../validation';
 
 class EditListModal extends Component {
+  getOptions = () => {
+    const { listsNumber } = this.props;
+
+    return [...Array(listsNumber)].map((_, index) =>
+      <option key={`list-${index}`} value={index + 1}>{index + 1}</option>
+    );
+  }
   render() {
     const { listId, showModal, editList, toggleModal, handleSubmit, reset } = this.props;
     const onSubmit = handleSubmit(data => {
@@ -30,8 +37,11 @@ class EditListModal extends Component {
               label="Kolejność"
               name="order"
               component={FieldWithErrors}
+              componentClass="select"
               type="text"
-            />
+            >
+              {this.getOptions()}
+            </Field>
           </Form>
         </Modal.Body>
         <Modal.Footer>

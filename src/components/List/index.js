@@ -28,7 +28,7 @@ class List extends Component {
     }));
   }
   render() {
-    const { name, id, addNewTask, tasksData, tasks, editList, order } = this.props;
+    const { name, id, addNewTask, tasksData, tasks, editList, order, listsNumber } = this.props;
     return (
       <div className="col-xs-3 list">
         <Panel>
@@ -69,6 +69,7 @@ class List extends Component {
         {this.state.showEditModal && 
           <EditListModal 
             initialValues={{ name, order: order + 1 }} 
+            listsNumber={listsNumber}
             listId={id} 
             showModal={this.state.showEditModal} 
             editList={editList} 
