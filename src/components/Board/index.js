@@ -28,8 +28,6 @@ class Board extends Component {
   }
   render() {
     const { lists, addNewTask, editList } = this.props;
-    const listsValues = values(lists);
-    const sortedLists = sortBy('order')(listsValues);
     return (
       <div className="container">
         <Header />
@@ -40,10 +38,17 @@ class Board extends Component {
             Dodaj nową listę
         </Button>
         <div className="row">
-          {sortedLists.map((list, index) => {
-            console.log("index", index);
+          {lists.map((list, index) => {
             return (
-              <List addNewTask={addNewTask} editList={editList} key={list.id} id={list.id} name={list.name} order={index} tasks={list.tasks} />
+              <List 
+                addNewTask={addNewTask} 
+                editList={editList} 
+                key={list.id} 
+                id={list.id} 
+                name={list.name} 
+                order={index} 
+                tasks={list.tasks} 
+              />
             );
           })}   
         </div>
