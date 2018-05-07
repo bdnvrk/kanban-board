@@ -6,7 +6,8 @@ import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from '../../reducers';
 import Board from '../Board';
-import './style.css';
+import Header from '../Header';
+import Footer from '../Footer';
 
 const logger = createLogger();
 const middleware = applyMiddleware(thunk, logger); 
@@ -21,7 +22,12 @@ class AppComponent extends Component {
     return (
       <Provider store={store}>
         <div className="App">
+          <Header />
           <Board />
+<<<<<<< HEAD
+=======
+          <Footer />
+>>>>>>> master
         </div>
       </Provider>
     );

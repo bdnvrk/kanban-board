@@ -1,4 +1,8 @@
-/* Hack for pullRight styling in boostrap lib*/
-.navbar-right {
-  margin-right: 0;
+.navbar {
+  background-color: #fff;
+  border-radius: 0;
+}
+
+.addItemButton {
+  margin-top: 8px;
 }
