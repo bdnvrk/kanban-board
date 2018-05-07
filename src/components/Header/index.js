@@ -27,7 +27,9 @@ class Header extends Component {
 
   renderLoginButton() {
     return (
-      <Button onClick={this.authFunction}>
+      <Button 
+        onClick={this.authFunction}
+        className="headerButton">
         Zaloguj
       </Button>
     );
@@ -71,19 +73,21 @@ class Header extends Component {
               Link
             </NavItem>
           </Nav>
+          
+          <Nav pullRight className="headerForm">
+            
+            { isUserAuthorized ? this.renderLogutButton() : this.renderLoginButton() }
+            {' '/* spacing between elements */} 
+            <Button 
+              bsStyle="warning" 
+              onClick={this.toggleModal}>
+                Dodaj nową listę
+            </Button>
+          </Nav>
           <Nav pullRight>
-            <Navbar.Form>
-              { isUserAuthorized ? this.renderLogutButton() : this.renderLoginButton() }
-            </Navbar.Form>
             <Navbar.Text>
               { isUserAuthorized ? `Jesteś zalogowany jako: ${ userName }` : '' }
             </Navbar.Text>
-            <Button 
-              bsStyle="warning" 
-              onClick={this.toggleModal} 
-              className="addItemButton">
-                Dodaj nową listę
-            </Button>
           </Nav>
         </Navbar>
         

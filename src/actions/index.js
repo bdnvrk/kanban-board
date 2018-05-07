@@ -7,7 +7,6 @@ export const addNewList = (name) => ({
   payload: { name },
 });
 
-<<<<<<< HEAD
 export const authorizeUser = (userData) => ({
   type: types.AUTHORIZE_USER,
   userData
@@ -48,7 +47,6 @@ export const requestLogout = () => {
       });
   }
 }
-=======
 export const addNewTask = (listId, taskId, taskData) => ({
   type: types.ADD_NEW_TASK,
   payload: { listId, taskId, taskData },
@@ -58,4 +56,3 @@ export const editList = (id, listData) => ({
   type: types.EDIT_LIST,
   payload: { id, listData },
 });
->>>>>>> master

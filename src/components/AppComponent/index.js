@@ -24,10 +24,7 @@ class AppComponent extends Component {
         <div className="App">
           <Header />
           <Board />
-<<<<<<< HEAD
-=======
           <Footer />
->>>>>>> master
         </div>
       </Provider>
     );
