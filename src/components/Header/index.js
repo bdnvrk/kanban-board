@@ -1,28 +1,62 @@
 import React, { Component } from 'react';
-import { Navbar, Nav, NavItem, Button, Modal } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import { startAuthorization, requestLogout } from '../../actions'
+import { Navbar, Nav, NavItem, Button, Modal } from 'react-bootstrap';
 import { addNewList } from '../../actions';
 import './style.css';
 
 class Header extends Component {
   constructor() {
     super();
+    this.logoffFunction = this.logoffFunction.bind(this);
+    this.authFunction = this.authFunction.bind(this);
     this.textInput = React.createRef();
     this.state = {
       showModal: false,
     };
   }
+  authFunction(e) {
+    e.preventDefault();
+    this.props.startAuthorization();
+  }
+
+  logoffFunction(e) {
+    e.preventDefault();
+    this.props.requestLogout();
+  }  
+
+  renderLoginButton() {
+    return (
+      <Button 
+        onClick={this.authFunction}
+        className="headerButton">
+        Zaloguj
+      </Button>
+    );
+  }
+
+  renderLogutButton() {
+    return (
+      <Button onClick={this.logoffFunction}>
+        Wyloguj
+      </Button>
+    );
+  }
+
   toggleModal = () => {
     this.setState(state => ({
       showModal: !state.showModal,
     }));
   }
+
   addList = () => {
     const value = this.textInput.current.value;
     this.props.addNewList(value);
     this.toggleModal();
   }
+
   render() {
+    const { isUserAuthorized, userName } = this.props;
     return (
       <div>
         <Navbar>
@@ -39,13 +73,21 @@ class Header extends Component {
               Link
             </NavItem>
           </Nav>
-          <Nav pullRight>
+          
+          <Nav pullRight className="headerForm">
+            
+            { isUserAuthorized ? this.renderLogutButton() : this.renderLoginButton() }
+            {' '/* spacing between elements */} 
             <Button 
               bsStyle="warning" 
-              onClick={this.toggleModal} 
-              className="addItemButton">
+              onClick={this.toggleModal}>
                 Dodaj nową listę
             </Button>
+          </Nav>
+          <Nav pullRight>
+            <Navbar.Text>
+              { isUserAuthorized ? `Jesteś zalogowany jako: ${ userName }` : '' }
+            </Navbar.Text>
           </Nav>
         </Navbar>
         
@@ -66,8 +108,17 @@ class Header extends Component {
   }
 };
 
+const mapStateToProps = (state) => (
+  {
+    isUserAuthorized: state.authorization.user.loggedIn,
+    userName: state.authorization.user.userData.displayName 
+  }
+)
+
 const mapDispatchToProps = {
   addNewList,
+  startAuthorization,
+  requestLogout
 }
 
-export default connect(null, mapDispatchToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
