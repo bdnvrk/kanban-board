@@ -6,3 +6,6 @@ export const LOG_OUT = 'LOG_OUT';
 export const PROMPT_ERROR = 'PROMPT_ERROR';
 export const EDIT_LIST = 'EDIT_LIST';
 export const ADD_NEW_TASK = 'ADD_NEW_TASK';
+export const UPDATE_DATABASE = 'UPDATE_DATABASE';
+export const GET_FROM_DATABASE = 'GET_FROM_DATABASE';
+export const REMOVE_FROM_DATABASE = 'REMOVE_FROM_DATABASE';

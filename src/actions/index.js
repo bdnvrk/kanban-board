@@ -2,6 +2,8 @@ import * as types from './types';
 import * as firebase from 'firebase';
 import { provider } from '../helperFunctions/client';
 
+const database = firebase.database();
+
 export const addNewList = (name) => ({
   type: types.ADD_NEW_LIST,
   payload: { name },
@@ -56,3 +58,21 @@ export const editList = (id, listData) => ({
   type: types.EDIT_LIST,
   payload: { id, listData },
 });
+
+export const updateDatabase = (path, data) => {
+  const updateData = {
+    [path]: data
+  }
+
+  return firebase.database().ref().update(updateData);
+}
+
+export const getDataFromDb = () => {
+  return firebase.database().ref('/lists').once('value').then((snapshot) => {
+    return snapshot.val() && snapshot.val().username
+  });
+}
+
+export const removeFromDb = (path) => {
+
+}
