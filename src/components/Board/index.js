@@ -1,9 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { addNewTask, editList } from '../../actions';
+import { addNewTask, editList, removeListWithTasks } from '../../actions';
 import List from '../List';
 
-const Board = ({ lists, addNewTask, editList }) => {
+const Board = ({ lists, addNewTask, editList, removeListWithTasks }) => {
   const listsNumber = lists.length;
   return (
     <div className="container">
@@ -13,6 +13,7 @@ const Board = ({ lists, addNewTask, editList }) => {
             <List 
               addNewTask={addNewTask} 
               editList={editList} 
+              removeListWithTasks={removeListWithTasks}
               key={list.id} 
               id={list.id} 
               name={list.name} 
@@ -34,6 +35,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   addNewTask,
   editList,
+  removeListWithTasks,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);

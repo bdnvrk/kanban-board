@@ -1,4 +1,5 @@
-import { ADD_NEW_TASK } from '../../actions/types';
+import omit from 'lodash/fp/omit';
+import { ADD_NEW_TASK, REMOVE_TASKS } from '../../actions/types';
 
 export default (state = {}, action) => {
   switch (action.type) {
@@ -12,6 +13,11 @@ export default (state = {}, action) => {
           ...taskData,
         },
       };
+    }
+    case REMOVE_TASKS: {
+      const { tasks } = action.payload;
+
+      return omit(tasks)(state);
     }
     default:
       return state
