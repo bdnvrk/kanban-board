@@ -66,28 +66,31 @@ const saveDataFromDatabase = (data) => ({
 
 const saveDataToDatabase = () => ({
   type: types.SAVE_DATA_TO_DATABASE
-})
+});
 
 const savedDataToDatabase = () => ({
   type: types.SAVED_DATA_TO_DATABASE
-})
+});
 
-export const updateDatabase = (path, data) => {
-  const updateData = {
-    [path]: data
-  }
-  return dispatch => {
-    dispatch(saveDataToDatabase())
-    return database.ref().update(updateData).then((status) => {
+export const updateDatabase = () => {
+  return (dispatch, getState) => {
+    const { lists, tasks } = getState();
+    const data = {
+      '/lists/': lists,
+      '/tasks/': tasks 
+    };
+    dispatch(saveDataToDatabase());
+    return database.ref().update(data).then((status) => {
       dispatch(savedDataToDatabase())
     });
   }
+  /**TODO zapisywanie danych zgodnie z ustalona hierarchia w storze */
 }
+
 
 export const getDataFromDb = () => {
   return dispatch => {
     return database.ref('/lists').once('value').then((snapshot) => {
-      console.log(snapshot);
       dispatch(saveDataFromDatabase(snapshot));
     });
   }
@@ -95,4 +98,21 @@ export const getDataFromDb = () => {
 
 export const removeFromDb = (path) => {
   /**TODO stworzyć funkcje usuwania rekordow z basy danych */
+}
+
+export const addToDatabase = (path, data, dispatch) => {
+  
+  return dispatch => {
+    dispatch(saveDataToDatabase);
+    return firebase.database().ref(`/${path}`).set(data).then(() => {
+      dispatch(savedDataToDatabase);
+    });
+  }
+}
+
+export const combineAddTask = (listId, taskId, taskData) => {
+  return dispatch => {
+    dispatch(addNewTask(listId, taskId, taskData));
+    dispatch(updateDatabase());
+  }
 }
