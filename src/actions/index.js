@@ -59,20 +59,39 @@ export const editList = (id, listData) => ({
   payload: { id, listData },
 });
 
+const saveDataFromDatabase = (data) => ({
+  type: types.SAVE_DATA_FROM_DATABASE,
+  data
+});
+
+const saveDataToDatabase = () => ({
+  type: types.SAVE_DATA_TO_DATABASE
+})
+
+const savedDataToDatabase = () => ({
+  type: types.SAVED_DATA_TO_DATABASE
+})
+
 export const updateDatabase = (path, data) => {
   const updateData = {
     [path]: data
   }
-
-  return firebase.database().ref().update(updateData);
+  return dispatch => {
+    dispatch(saveDataToDatabase())
+    return database.ref().update(updateData).then((status) => {
+      dispatch(savedDataToDatabase())
+    });
+  }
 }
 
 export const getDataFromDb = () => {
-  return firebase.database().ref('/lists').once('value').then((snapshot) => {
-    return snapshot.val() && snapshot.val().username
-  });
+  return dispatch => {
+    return database.ref('/lists').once('value').then((snapshot) => {
+      dispatch(saveDataFromDatabase(snapshot));
+    });
+  }
 }
 
 export const removeFromDb = (path) => {
-
+  /**TODO stworzyć funkcje usuwania rekordow z basy danych */
 }
