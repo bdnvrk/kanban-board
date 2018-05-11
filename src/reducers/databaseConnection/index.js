@@ -4,7 +4,6 @@ import {
   SAVE_DATA_FROM_DATABASE,  
   SAVED_DATA_TO_DATABASE 
 } from '../../actions/types';
-import { stat } from 'fs/promises';
 
 const initialState = {
   databaseConneciton: {
@@ -27,6 +26,12 @@ export default function databaseConneciton(state = initialState, action) {
         ...state,
         databaseBeingUpdated: false,
         databaseUpdated: true
+      }
+    }
+    case SAVE_DATA_FROM_DATABASE: {
+      return {
+        ...state,
+        lists: action.data
       }
     }
 

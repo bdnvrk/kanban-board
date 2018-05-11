@@ -87,6 +87,7 @@ export const updateDatabase = (path, data) => {
 export const getDataFromDb = () => {
   return dispatch => {
     return database.ref('/lists').once('value').then((snapshot) => {
+      console.log(snapshot);
       dispatch(saveDataFromDatabase(snapshot));
     });
   }
