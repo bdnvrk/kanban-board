@@ -50,6 +50,7 @@ class AddTaskModal extends Component {
                 type="text"
                 validate={[isNotEmpty]}
               >
+                <option value="">Wybierz</option>
                 <option value="low">Niski</option>
                 <option value="medium">Średni</option>
                 <option value="high">Wysoki</option>

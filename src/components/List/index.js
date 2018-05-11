@@ -43,6 +43,7 @@ class List extends Component {
             <span className="counter">{tasks.length}</span>
             <div className="menu">
               <DropdownButton
+                id="list-menu"
                 bsStyle="link"
                 title={<FontAwesome name="bars" />}
               >
@@ -57,6 +58,7 @@ class List extends Component {
               {map(task => {
                 return (
                   <Task
+                    key={`task-${task.id}`}
                     id={task.id}
                     name={task.name}
                     priority={task.priority}
