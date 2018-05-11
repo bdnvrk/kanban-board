@@ -8,7 +8,7 @@ const initialState = [
   {
     id: initialId,
     name: 'Twoja pierwsza lista',
-    tasks: [],
+    tasks: ['task_0'],
   },
 ];
 
