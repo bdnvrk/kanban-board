@@ -20,6 +20,7 @@ class Task extends Component {
         </div>
         <div className="menu">
           <DropdownButton
+            id="task-menu"
             bsStyle="link"
             title={<FontAwesome name="pencil" />}
           >
