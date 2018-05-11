@@ -27,6 +27,10 @@ class List extends Component {
       showEditModal: !state.showEditModal,
     }));
   }
+  removeList = () => {
+    const { removeListWithTasks, id, tasks } = this.props;
+    removeListWithTasks(id, tasks);
+  }
   render() {
     const { name, id, addNewTask, tasksData, tasks, editList, order, listsNumber } = this.props;
     return (
@@ -43,6 +47,7 @@ class List extends Component {
               >
                 <MenuItem eventKey="1" onClick={this.toggleAddModal}>Dodaj zadanie</MenuItem>
                 <MenuItem eventKey="2" onClick={this.toggleEditModal}>Edytuj</MenuItem>
+                <MenuItem eventKey="3" onClick={this.removeList}>Usuń</MenuItem>
               </DropdownButton>
             </div>
           </Panel.Heading>

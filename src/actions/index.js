@@ -47,6 +47,14 @@ export const requestLogout = () => {
       });
   }
 }
+
+export const removeListWithTasks = (listId, tasks) => {
+  return dispatch => {
+    dispatch(removeList(listId));
+    dispatch(removeTasks(tasks));
+  }
+};
+
 export const addNewTask = (listId, taskId, taskData) => ({
   type: types.ADD_NEW_TASK,
   payload: { listId, taskId, taskData },
@@ -55,4 +63,14 @@ export const addNewTask = (listId, taskId, taskData) => ({
 export const editList = (id, listData) => ({
   type: types.EDIT_LIST,
   payload: { id, listData },
+});
+
+const removeList = id => ({
+  type: types.REMOVE_LIST,
+  payload: { id },
+});
+
+const removeTasks = tasks => ({
+  type: types.REMOVE_TASKS,
+  payload: { tasks },
 });

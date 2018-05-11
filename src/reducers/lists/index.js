@@ -1,6 +1,6 @@
 import uniqueId from 'lodash/fp/uniqueId';
 import findIndex from 'lodash/fp/findIndex';
-import { ADD_NEW_LIST, ADD_NEW_TASK, EDIT_LIST } from '../../actions/types';
+import { ADD_NEW_LIST, ADD_NEW_TASK, EDIT_LIST, REMOVE_LIST } from '../../actions/types';
 
 const initialId = uniqueId('list_');
 
@@ -26,6 +26,11 @@ export default (state = initialState, action) => {
           tasks: [],
         },
       ];
+    }
+    case REMOVE_LIST: {
+      const { id } = action.payload;
+
+      return state.filter(list => list.id !== id);
     }
     case EDIT_LIST: {
       const { id, listData: { name, order: newOrder } } = action.payload;
