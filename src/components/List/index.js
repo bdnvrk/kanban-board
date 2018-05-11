@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import pick from 'lodash/fp/pick';
 import map from 'lodash/fp/map';
 import Panel from 'react-bootstrap/lib/Panel';
-import { DropdownButton, MenuItem, Label } from 'react-bootstrap';
+import { DropdownButton, MenuItem } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
 import AddTaskModal from '../AddTaskModal';
 import EditListModal from '../EditListModal';
+import Task from '../Task';
 import './style.css';
 
 class List extends Component {
@@ -53,13 +54,16 @@ class List extends Component {
           </Panel.Heading>
           <Panel.Body>
             <ul className="tasksList">
-              {map(task=>{
+              {map(task => {
                 return (
-                  <li className="task">
-                    <h3>{task.name}</h3>
-                    <span className="priority">Priorytet: {task.priority}</span><br />
-                    <Label bsStyle="default">{task.deadline}</Label>
-                  </li>
+                  <Task
+                    id={task.id}
+                    name={task.name}
+                    priority={task.priority}
+                    deadline={task.deadline}
+                    removeSingleTask={this.props.removeSingleTask}
+                    listId={id}
+                  />
                 );
               })(tasksData)}
             </ul>

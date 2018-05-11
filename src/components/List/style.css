@@ -33,25 +33,6 @@
   padding: 0;
 }
 
-.list .panel-body .tasksList .task {
-  display: block;
-  border: 2px solid #f2f2f2;
-  border-radius: 5px;
-  padding: 10px;
-  text-align: left;
-  margin-bottom: 10px;
-}
-
-.list .panel-body .tasksList .task h3 {
-  font-size: 14px;
-  margin: 0;
-}
-
-.list .panel-body .tasksList .task .priority {
-  font-weight: 300;
-  font-size: 12px;
-}
-
 .menu {
   display: inline-block;
   float: right;

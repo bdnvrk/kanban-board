@@ -1,0 +1,44 @@
+.task {
+  display: block;
+  border: 2px solid #f2f2f2;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+.task:after {
+  clear: both;
+  content: '';
+  display: block;
+}
+
+.task h3 {
+  font-size: 14px;
+  margin: 0;
+}
+
+.task .priority {
+  font-weight: 300;
+  font-size: 12px;
+}
+
+.task .data {
+  float: left;
+  width: calc(100% - 20px);
+}
+
+.task .menu {
+  width: 20px;
+  float: right;
+  text-align: right;
+}
+
+.task .menu > .dropdown > button {
+  padding: 0;
+  color: #000;
+}
+
+.task .menu .caret {
+  display: none; /* remove default bootstrap caret from dropdown */
+}
