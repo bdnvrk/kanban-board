@@ -1,6 +1,12 @@
 import uniqueId from 'lodash/fp/uniqueId';
 import findIndex from 'lodash/fp/findIndex';
-import { ADD_NEW_LIST, ADD_NEW_TASK, EDIT_LIST, REMOVE_LIST } from '../../actions/types';
+import { 
+  ADD_NEW_LIST, 
+  ADD_NEW_TASK, 
+  EDIT_LIST, 
+  REMOVE_LIST, 
+  REMOVE_SINGLE_TASK
+} from '../../actions/types';
 
 const initialId = uniqueId('list_');
 
@@ -59,6 +65,22 @@ export default (state = initialState, action) => {
       updatedState[index] = {
         ...listData,
         tasks: [...listData.tasks, taskId],
+      };
+
+      return updatedState;
+    }
+    case REMOVE_SINGLE_TASK: {
+      const { listId, taskId } = action.payload;
+      const listIndex = findIndex(list => list.id === listId)(state);
+      const listData = state[listIndex];
+      const tasksList = listData.tasks.slice();
+      const taskIndex = tasksList.indexOf(taskId);
+      tasksList.splice(taskIndex, 1);
+
+      const updatedState = state.slice();
+      updatedState[listIndex] = {
+        ...listData,
+        tasks: tasksList,
       };
 
       return updatedState;

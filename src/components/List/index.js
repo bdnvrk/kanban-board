@@ -57,9 +57,12 @@ class List extends Component {
               {map(task => {
                 return (
                   <Task
+                    id={task.id}
                     name={task.name}
                     priority={task.priority}
                     deadline={task.deadline}
+                    removeSingleTask={this.props.removeSingleTask}
+                    listId={id}
                   />
                 );
               })(tasksData)}
