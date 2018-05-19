@@ -6,7 +6,7 @@ const maxLength = max => value =>
 export const isNotPastDate = date => {
   const selectedDate = new Date(date);
   const now = new Date();
-  if (selectedDate < now) {
+  if (selectedDate <= now) {
     return 'Wybrana data nie moze być datą przeszłą';
   }
 }
