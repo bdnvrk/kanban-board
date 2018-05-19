@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { startAuthorization, requestLogout, getDataFromDb } from '../../actions'
 import { Navbar, Nav, NavItem, Button, Modal } from 'react-bootstrap';
-import { addNewList, combineAddTask } from '../../actions';
+import { addNewList } from '../../actions';
 import './style.css';
 
 class Header extends Component {

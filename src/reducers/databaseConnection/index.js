@@ -1,7 +1,7 @@
 
 import { 
   UPDATE_DATABASE, 
-  SAVE_DATA_FROM_DATABASE,  
+  SAVED_DATA_FROM_DATABASE,  
   SAVED_DATA_TO_DATABASE 
 } from '../../actions/types';
 
@@ -28,7 +28,7 @@ export default function databaseConneciton(state = initialState, action) {
         databaseUpdated: true
       }
     }
-    case SAVE_DATA_FROM_DATABASE: {
+    case SAVED_DATA_FROM_DATABASE: {
       return {
         ...state,
         data: action.data

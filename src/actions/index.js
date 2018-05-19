@@ -68,10 +68,13 @@ export const editList = (id, listData) => ({
   payload: { id, listData },
 });
 
-const saveDataFromDatabase = (data) => ({
+const saveDataFromDatabase = () => ({
   type: types.SAVE_DATA_FROM_DATABASE,
-  data
 });
+const savedDataFromDatabase = (data) => ({
+  type: types.SAVED_DATA_FROM_DATABASE,
+  data
+})
 
 const saveDataToDatabase = () => ({
   type: types.SAVE_DATA_TO_DATABASE
@@ -99,9 +102,10 @@ export const updateDatabase = () => {
 
 export const getDataFromDb = () => {
   return dispatch => {
+    dispatch(saveDataToDatabase());
     return database.ref('/').once('value').then((snapshot) => {
       console.log(snapshot)
-      dispatch(saveDataFromDatabase(snapshot));
+      dispatch(savedDataFromDatabase(snapshot));
     });
   }
 }
