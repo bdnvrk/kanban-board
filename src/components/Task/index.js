@@ -5,9 +5,9 @@ import './style.css';
 
 class Task extends Component {
   remove = () => {
-    const { removeSingleTask, id, listId } = this.props;
+    const { combineRemoveSingleTask, id, listId } = this.props;
 
-    removeSingleTask(id, listId);
+    combineRemoveSingleTask(id, listId);
   }
   render() {
     const { name, priority, deadline } = this.props;

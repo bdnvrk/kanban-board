@@ -54,6 +54,7 @@ export const removeListWithTasks = (listId, tasks) => {
   return dispatch => {
     dispatch(removeList(listId));
     dispatch(removeTasks(tasks));
+    dispatch(updateDatabase());
   }
 };
 
@@ -98,22 +99,9 @@ export const updateDatabase = () => {
 
 export const getDataFromDb = () => {
   return dispatch => {
-    return database.ref('/lists').once('value').then((snapshot) => {
+    return database.ref('/').once('value').then((snapshot) => {
+      console.log(snapshot)
       dispatch(saveDataFromDatabase(snapshot));
-    });
-  }
-}
-
-export const removeFromDb = (path) => {
-  /**TODO stworzyć funkcje usuwania rekordow z basy danych */
-}
-
-export const addToDatabase = (path, data, dispatch) => {
-  
-  return dispatch => {
-    dispatch(saveDataToDatabase);
-    return firebase.database().ref(`/${path}`).set(data).then(() => {
-      dispatch(savedDataToDatabase);
     });
   }
 }
@@ -134,7 +122,14 @@ const removeTasks = tasks => ({
   payload: { tasks },
 });
 
-export const removeSingleTask = (taskId, listId) => ({
+const removeSingleTask = (taskId, listId) => ({
   type: types.REMOVE_SINGLE_TASK,
   payload: { taskId, listId },
 });
+
+export const combineRemoveSingleTask = (taskId, listId) => {
+  return dispatch => {
+    dispatch(removeSingleTask(taskId, listId));
+    dispatch(updateDatabase());
+  }
+}

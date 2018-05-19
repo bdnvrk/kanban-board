@@ -31,7 +31,7 @@ export default function databaseConneciton(state = initialState, action) {
     case SAVE_DATA_FROM_DATABASE: {
       return {
         ...state,
-        lists: action.data
+        data: action.data
       }
     }
 
