@@ -79,3 +79,8 @@ export const removeSingleTask = (taskId, listId) => ({
   type: types.REMOVE_SINGLE_TASK,
   payload: { taskId, listId },
 });
+
+export const editTask = (id, taskData) => ({
+  type: types.EDIT_TASK,
+  payload: { id, taskData },
+});

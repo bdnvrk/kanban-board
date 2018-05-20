@@ -4,7 +4,8 @@ import {
   addNewTask, 
   editList, 
   removeListWithTasks, 
-  removeSingleTask 
+  removeSingleTask,
+  editTask,
 } from '../../actions';
 import List from '../List';
 
@@ -13,7 +14,8 @@ const Board = ({
   addNewTask, 
   editList, 
   removeListWithTasks, 
-  removeSingleTask 
+  removeSingleTask,
+  editTask,
 }) => {
   const listsNumber = lists.length;
   return (
@@ -23,7 +25,8 @@ const Board = ({
           return (
             <List 
               addNewTask={addNewTask} 
-              editList={editList} 
+              editList={editList}
+              editTask={editTask}
               removeListWithTasks={removeListWithTasks}
               removeSingleTask={removeSingleTask}
               key={list.id} 
@@ -49,6 +52,7 @@ const mapDispatchToProps = {
   editList,
   removeListWithTasks,
   removeSingleTask,
+  editTask,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);

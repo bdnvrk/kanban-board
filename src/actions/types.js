@@ -8,3 +8,4 @@ export const EDIT_LIST = 'EDIT_LIST';
 export const ADD_NEW_TASK = 'ADD_NEW_TASK';
 export const REMOVE_TASKS = 'REMOVE_TASKS';
 export const REMOVE_SINGLE_TASK = 'REMOVE_SINGLE_TASK';
+export const EDIT_TASK = 'EDIT_TASK';
