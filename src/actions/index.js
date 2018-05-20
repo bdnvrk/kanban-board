@@ -1,6 +1,7 @@
 import * as types from './types';
 import * as firebase from 'firebase';
 import { provider } from '../helperFunctions/client';
+import initializeIdProviders from '../helperFunctions/idProvider';
 
 const database = firebase.database();
 
@@ -105,6 +106,7 @@ export const getDataFromDb = () => {
   return dispatch => {
     dispatch(saveDataToDatabase());
     return database.ref('/').once('value').then((snapshot) => {
+      initializeIdProviders(snapshot.val());
       dispatch(savedDataFromDatabase(snapshot.val()));
     });
   }
