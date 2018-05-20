@@ -21,11 +21,11 @@ export const logOut = () => ({
 export const promptError = (error) => ({
   type: types.PROMPT_ERROR,
   error
-})
+});
 
 const requestAuthorization = () => ({
   type: types.REQUEST_AUTHORIZATION
-})
+});
 
 export const startAuthorization = () => {
   return dispatch => {
@@ -71,6 +71,7 @@ export const editList = (id, listData) => ({
 const saveDataFromDatabase = () => ({
   type: types.SAVE_DATA_FROM_DATABASE,
 });
+
 const savedDataFromDatabase = (data) => ({
   type: types.SAVED_DATA_FROM_DATABASE,
   data
@@ -104,8 +105,7 @@ export const getDataFromDb = () => {
   return dispatch => {
     dispatch(saveDataToDatabase());
     return database.ref('/').once('value').then((snapshot) => {
-      console.log(snapshot)
-      dispatch(savedDataFromDatabase(snapshot));
+      dispatch(savedDataFromDatabase(snapshot.val()));
     });
   }
 }

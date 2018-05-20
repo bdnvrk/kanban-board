@@ -12,7 +12,7 @@ import List from '../List';
 
 class Board extends Component {
 
-  componentDidMount() {
+  componentWillMount() {
     const { getDataFromDb } = this.props;
     getDataFromDb();
   }

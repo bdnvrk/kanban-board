@@ -2,7 +2,8 @@ import omit from 'lodash/fp/omit';
 import { 
   ADD_NEW_TASK, 
   REMOVE_TASKS, 
-  REMOVE_SINGLE_TASK 
+  REMOVE_SINGLE_TASK,
+  SAVED_DATA_FROM_DATABASE 
 } from '../../actions/types';
 
 const initialState = {
@@ -37,6 +38,11 @@ export default (state = initialState, action) => {
       const { tasks } = action.payload;
 
       return omit(tasks)(state);
+    }
+    case SAVED_DATA_FROM_DATABASE: {
+      return {
+        ...action.data.tasks
+      }
     }
     default:
       return state
