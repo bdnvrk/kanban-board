@@ -2,20 +2,28 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import Board from '../Board';
 import IntroView from '../IntroView';
+import { startAuthorization } from '../../actions';
 
 class MainView extends Component {
 
-  renderMainView() {
-    
+  constructor() {
+    super();
+    this.authFunction = this.authFunction.bind(this);
+  }
+
+  authFunction(e) {
+    e.preventDefault();
+    this.props.startAuthorization();
+  }
+
+  renderMainView() {    
     const { authorization } = this.props;
 
     if(authorization.user.loggedIn) {
       return <Board />
     } else {
-      return <IntroView />
+      return <IntroView authFunction={this.authFunction}/>
     }
-
-
   }
 
   render() {
@@ -31,4 +39,8 @@ const mapStateToProps = (state) => ({
   authorization: state.authorization
 });
 
-export default connect(mapStateToProps)(MainView);
+const mapDispatchToProps = {
+  startAuthorization
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainView);

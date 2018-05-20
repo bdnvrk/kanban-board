@@ -9,7 +9,6 @@ class Header extends Component {
   constructor() {
     super();
     this.logoffFunction = this.logoffFunction.bind(this);
-    this.authFunction = this.authFunction.bind(this);
     this.textInput = React.createRef();
     this.state = {
       showModal: false,
@@ -24,16 +23,6 @@ class Header extends Component {
     e.preventDefault();
     this.props.requestLogout();
   }  
-
-  renderLoginButton() {
-    return (
-      <Button 
-        onClick={this.authFunction}
-        className="headerButton">
-        Zaloguj
-      </Button>
-    );
-  }
 
   renderLogutButton() {
     return (
@@ -55,8 +44,32 @@ class Header extends Component {
     this.toggleModal();
   }
 
-  render() {
+  renderTopPanelFunctions = () => {
     const { isUserAuthorized, userName } = this.props;
+
+    if ( isUserAuthorized ) {
+      return (
+        <React.Fragment>
+          <Nav pullRight className="headerForm">
+            { this.renderLogutButton() }
+            {' '/* spacing between elements */}
+            <Button 
+              bsStyle="warning" 
+              onClick={this.toggleModal}>
+                Dodaj nową listę
+            </Button>
+          </Nav>
+          <Nav pullRight>
+            <Navbar.Text>
+              { isUserAuthorized ? `Jesteś zalogowany jako: ${ userName }` : '' }
+            </Navbar.Text>
+          </Nav>
+        </React.Fragment>
+      );
+    }
+  }
+
+  render() {
     return (
       <div>
         <Navbar>
@@ -73,22 +86,7 @@ class Header extends Component {
               Link
             </NavItem>
           </Nav>
-          
-          <Nav pullRight className="headerForm">
-            
-            { isUserAuthorized ? this.renderLogutButton() : this.renderLoginButton() }
-            {' '/* spacing between elements */}
-            <Button 
-              bsStyle="warning" 
-              onClick={this.toggleModal}>
-                Dodaj nową listę
-            </Button>
-          </Nav>
-          <Nav pullRight>
-            <Navbar.Text>
-              { isUserAuthorized ? `Jesteś zalogowany jako: ${ userName }` : '' }
-            </Navbar.Text>
-          </Nav>
+          {this.renderTopPanelFunctions}  
         </Navbar>
         
         <Modal show={this.state.showModal} onHide={this.toggleModal}>
