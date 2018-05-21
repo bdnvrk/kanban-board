@@ -6,15 +6,15 @@ import { startAuthorization } from '../../actions';
 
 class MainView extends Component {
 
-  constructor() {
-    super();
-    this.authFunction = this.authFunction.bind(this);
-  }
+  // constructor() {
+  //   super();
+  //   this.authFunction = this.authFunction.bind(this);
+  // }
 
-  authFunction(e) {
-    e.preventDefault();
-    this.props.startAuthorization();
-  }
+  // authFunction(e) {
+  //   e.preventDefault();
+  //   this.props.startAuthorization();
+  // }
 
   renderMainView() {    
     const { authorization } = this.props;
@@ -22,7 +22,7 @@ class MainView extends Component {
     if(authorization.user.loggedIn) {
       return <Board />
     } else {
-      return <IntroView authFunction={this.authFunction}/>
+      return <IntroView authFunction={this.props.startAuthorization}/>
     }
   }
 
