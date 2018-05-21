@@ -12,10 +12,11 @@ class AddTaskModal extends Component {
     }
   }
   render() {
-    const { showModal, addNewTask, toggleModal, handleSubmit, listId, reset } = this.props;
+    const { showModal, toggleModal, handleSubmit, listId, reset, combineAddTask } = this.props;
     const onSubmit = handleSubmit(data => {
       const taskId = uniqueId('task_');
-      addNewTask(listId, taskId, data);
+      
+      combineAddTask(listId, taskId, data)
       toggleModal();
       reset();
     });

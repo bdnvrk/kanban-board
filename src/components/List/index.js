@@ -33,7 +33,7 @@ class List extends Component {
     removeListWithTasks(id, tasks);
   }
   render() {
-    const { name, id, addNewTask, tasksData, tasks, editList, order, listsNumber } = this.props;
+    const { name, id, addNewTask, tasksData, tasks, editList, order, listsNumber, combineAddTask } = this.props;
     return (
       <div className="col-xs-3 list">
         <Panel>
@@ -63,7 +63,7 @@ class List extends Component {
                     name={task.name}
                     priority={task.priority}
                     deadline={task.deadline}
-                    removeSingleTask={this.props.removeSingleTask}
+                    combineRemoveSingleTask={this.props.combineRemoveSingleTask}
                     listId={id}
                   />
                 );
@@ -73,7 +73,8 @@ class List extends Component {
         </Panel>
         <AddTaskModal 
           listId={id} 
-          showModal={this.state.showAddModal} 
+          showModal={this.state.showAddModal}
+          combineAddTask={combineAddTask} 
           addNewTask={addNewTask} 
           toggleModal={this.toggleAddModal}
         />

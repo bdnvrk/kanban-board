@@ -5,7 +5,8 @@ import {
   ADD_NEW_TASK, 
   EDIT_LIST, 
   REMOVE_LIST, 
-  REMOVE_SINGLE_TASK
+  REMOVE_SINGLE_TASK,
+  SAVED_DATA_FROM_DATABASE
 } from '../../actions/types';
 
 const initialId = uniqueId('list_');
@@ -84,6 +85,9 @@ export default (state = initialState, action) => {
       };
 
       return updatedState;
+    }
+    case SAVED_DATA_FROM_DATABASE: {
+      return action.data.lists
     }
     default:
       return state
