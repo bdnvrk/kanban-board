@@ -3,6 +3,7 @@ import {
   ADD_NEW_TASK, 
   REMOVE_TASKS, 
   REMOVE_SINGLE_TASK,
+  EDIT_TASK, 
   SAVED_DATA_FROM_DATABASE 
 } from '../../actions/types';
 
@@ -28,6 +29,17 @@ export default (state = {}, action) => {
       const { tasks } = action.payload;
 
       return omit(tasks)(state);
+    }
+    case EDIT_TASK: {
+      const { id, taskData } = action.payload;
+      
+      return {
+        ...state,
+        [id]: {
+          id,
+          ...taskData,
+        },
+      }
     }
     case SAVED_DATA_FROM_DATABASE: {
       return {

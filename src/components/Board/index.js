@@ -1,22 +1,21 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import List from '../List';
 import { 
   addNewTask,
   combineAddTask, 
   editList, 
   removeListWithTasks, 
   combineRemoveSingleTask,
-  getDataFromDb 
+  getDataFromDb,
+  editTask,
 } from '../../actions';
-import List from '../List';
 
 class Board extends Component {
-
   componentDidMount() {
     const { getDataFromDb } = this.props;
     getDataFromDb();
   }
-
   render() {
     const {
       addNewTask,
@@ -25,7 +24,7 @@ class Board extends Component {
       lists,  
       removeListWithTasks, 
       combineRemoveSingleTask,
-      
+      editTask,
     } = this.props;
     const listsNumber = lists.length;
     return (
@@ -36,7 +35,8 @@ class Board extends Component {
               <List
                 combineAddTask={combineAddTask} 
                 addNewTask={addNewTask} 
-                editList={editList} 
+                editList={editList}
+                editTask={editTask}
                 removeListWithTasks={removeListWithTasks}
                 combineRemoveSingleTask={combineRemoveSingleTask}
                 key={list.id} 
@@ -63,8 +63,9 @@ const mapDispatchToProps = {
   addNewTask,
   editList,
   removeListWithTasks,
+  editTask,
   combineRemoveSingleTask,
-  getDataFromDb
-}
+  getDataFromDb,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);
