@@ -56,17 +56,17 @@ class Task extends Component {
 };
 
 const boxSource = {
-	beginDrag(props) {
-		return {
-			taskId: props.id,
+  beginDrag(props) {
+    return {
+      taskId: props.id,
       currentListId: props.listId,
-		}
-	},
+    }
+  },
 }
 
 const collect = (connect, monitor) => ({
-	connectDragSource: connect.dragSource(),
-	isDragging: monitor.isDragging(),
+  connectDragSource: connect.dragSource(),
+  isDragging: monitor.isDragging(),
 });
 
 export default DragSource('TASK', boxSource, collect)(Task);

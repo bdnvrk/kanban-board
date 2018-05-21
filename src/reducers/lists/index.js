@@ -1,6 +1,5 @@
 import uniqueId from 'lodash/fp/uniqueId';
 import findIndex from 'lodash/fp/findIndex';
-import without from 'lodash/fp/without';
 import { 
   ADD_NEW_LIST, 
   ADD_NEW_TASK, 
@@ -92,7 +91,10 @@ export default (state = initialState, action) => {
       const currentListIndex = findIndex(list => list.id === currentListId)(state);
       const nextListIndex = findIndex(list => list.id === nextListId)(state);
 
-      const tasksList1 = without(state[currentListIndex].tasks, taskId);
+      const tasksList1 = state[currentListIndex].tasks.slice();
+      const taskIndex = tasksList1.indexOf(taskId);
+      tasksList1.splice(taskIndex, 1);
+
       const tasksList2 = state[nextListIndex].tasks.concat(taskId);
 
       const updatedState = state.slice();
