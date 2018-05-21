@@ -86,7 +86,7 @@ class Header extends Component {
               Link
             </NavItem>
           </Nav>
-          {this.renderTopPanelFunctions}  
+          {this.renderTopPanelFunctions()}  
         </Navbar>
         
         <Modal show={this.state.showModal} onHide={this.toggleModal}>
