@@ -5,6 +5,7 @@
   padding: 10px;
   text-align: left;
   margin-bottom: 10px;
+  cursor: move;
 }
 
 .task:after {

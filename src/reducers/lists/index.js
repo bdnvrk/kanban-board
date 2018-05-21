@@ -5,6 +5,7 @@ import {
   EDIT_LIST, 
   REMOVE_LIST, 
   REMOVE_SINGLE_TASK,
+  MOVE_TASK,
   SAVED_DATA_FROM_DATABASE
 } from '../../actions/types';
 
@@ -74,6 +75,28 @@ export default (state = [], action) => {
 
       return updatedState;
     }
+    case MOVE_TASK: {
+      const { taskId, currentListId, nextListId } = action.payload;
+      const currentListIndex = findIndex(list => list.id === currentListId)(state);
+      const nextListIndex = findIndex(list => list.id === nextListId)(state);
+
+      const tasksList1 = state[currentListIndex].tasks.slice();
+      const taskIndex = tasksList1.indexOf(taskId);
+      tasksList1.splice(taskIndex, 1);
+
+      const tasksList2 = state[nextListIndex].tasks.concat(taskId);
+
+      const updatedState = state.slice();
+      updatedState[currentListIndex] = {
+        ...state[currentListIndex],
+        tasks: tasksList1,
+      };
+      updatedState[nextListIndex] = {
+        ...state[nextListIndex],
+        tasks: tasksList2,
+      };
+      return updatedState;
+    }
     case SAVED_DATA_FROM_DATABASE: {
       return action.data.lists
     }
@@ -81,3 +104,4 @@ export default (state = [], action) => {
       return state
   }
 };
+

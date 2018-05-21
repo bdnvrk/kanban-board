@@ -133,6 +133,11 @@ const removeSingleTask = (taskId, listId) => ({
   payload: { taskId, listId },
 });
 
+export const moveTask = (taskId, currentListId, nextListId) => ({
+  type: types.MOVE_TASK,
+  payload: { taskId, currentListId, nextListId },
+});
+
 export const combineRemoveSingleTask = (taskId, listId) => {
   return dispatch => {
     dispatch(removeSingleTask(taskId, listId));

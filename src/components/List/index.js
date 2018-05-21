@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { DropTarget } from 'react-dnd';
 import pick from 'lodash/fp/pick';
 import map from 'lodash/fp/map';
 import Panel from 'react-bootstrap/lib/Panel';
@@ -33,14 +34,16 @@ class List extends Component {
     removeListWithTasks(id, tasks);
   }
   render() {
-    const { name, id, addNewTask, tasksData, tasks, editList, order, listsNumber, combineAddTask, editTask } = this.props;
-    return (
+    const { name, id, tasksData, order, connectDropTarget } = this.props;
+    const maskClass = this.props.isOver ? 'mask isOver' : 'mask';
+    return connectDropTarget(
       <div className="col-xs-3 list">
         <Panel>
+          {this.props.canDrop && <div className={maskClass}></div>}
           <Panel.Heading>
             {name}
             {' '}
-            <span className="counter">{tasks.length}</span>
+            <span className="counter">{this.props.tasks.length}</span>
             <div className="menu">
               <DropdownButton
                 id="list-menu"
@@ -66,7 +69,9 @@ class List extends Component {
                     deadline={task.deadline}
                     combineRemoveSingleTask={this.props.combineRemoveSingleTask}
                     listId={id}
-                    editTask={editTask}
+                    lists={this.props.lists}
+                    editTask={this.props.editTask}
+                    moveTask={this.props.moveTask}
                   />
                 );
               })(tasksData)}
@@ -76,17 +81,17 @@ class List extends Component {
         <AddTaskModal 
           listId={id} 
           showModal={this.state.showAddModal}
-          combineAddTask={combineAddTask} 
-          addNewTask={addNewTask} 
+          combineAddTask={this.props.combineAddTask} 
+          addNewTask={this.props.addNewTask} 
           toggleModal={this.toggleAddModal}
         />
         {this.state.showEditModal && 
           <EditListModal 
             initialValues={{ name, order: order + 1 }} 
-            listsNumber={listsNumber}
+            listsNumber={this.props.listsNumber}
             listId={id} 
             showModal={this.state.showEditModal} 
-            editList={editList} 
+            editList={this.props.editList} 
             toggleModal={this.toggleEditModal}
           />
         }
@@ -95,10 +100,33 @@ class List extends Component {
   }
 }
 
+const target = {
+  drop(props, monitor) {
+    const { moveTask, id } = props;
+    const { taskId, currentListId } = monitor.getItem();
+
+    moveTask(taskId, currentListId, id);
+  },
+  canDrop: (props, monitor) => {
+    const { id } = props;
+    const { currentListId } = monitor.getItem();
+
+    return currentListId !== id;
+  },
+}
+
+const collect = (connect, monitor) => ({
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver(),
+  canDrop: monitor.canDrop(),
+});
+
 const mapStateToProps = (state, props) => {
   return {
     tasksData: pick(props.tasks, state.tasks),
   };
 }
 
-export default connect(mapStateToProps)(List);
+const ConnectedComponent = connect(mapStateToProps)(List);
+
+export default DropTarget(['TASK'], target, collect)(ConnectedComponent);
