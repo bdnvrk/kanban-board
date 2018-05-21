@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
-import uniqueId from 'lodash/fp/uniqueId';
 import { Field, reduxForm } from 'redux-form';
 import FieldWithErrors from '../FieldWithErrors';
 import { isNotEmpty, maxLength20, isNotPastDate } from '../../validation';
@@ -12,10 +11,11 @@ class AddTaskModal extends Component {
     }
   }
   render() {
-    const { showModal, addNewTask, toggleModal, handleSubmit, listId, reset } = this.props;
+    const { showModal, toggleModal, handleSubmit, listId, reset, combineAddTask } = this.props;
     const onSubmit = handleSubmit(data => {
-      const taskId = uniqueId('task_');
-      addNewTask(listId, taskId, data);
+      const taskId = window.getTaskId();
+      
+      combineAddTask(listId, taskId, data)
       toggleModal();
       reset();
     });

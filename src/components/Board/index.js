@@ -1,46 +1,57 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import List from '../List';
 import { 
-  addNewTask, 
+  addNewTask,
+  combineAddTask, 
   editList, 
   removeListWithTasks, 
-  removeSingleTask,
+  combineRemoveSingleTask,
+  getDataFromDb,
   editTask,
 } from '../../actions';
-import List from '../List';
 
-const Board = ({ 
-  lists, 
-  addNewTask, 
-  editList, 
-  removeListWithTasks, 
-  removeSingleTask,
-  editTask,
-}) => {
-  const listsNumber = lists.length;
-  return (
-    <div className="container">
-      <div className="row">
-        {lists.map((list, index) => {
-          return (
-            <List 
-              addNewTask={addNewTask} 
-              editList={editList}
-              editTask={editTask}
-              removeListWithTasks={removeListWithTasks}
-              removeSingleTask={removeSingleTask}
-              key={list.id} 
-              id={list.id} 
-              name={list.name} 
-              order={index} 
-              listsNumber={listsNumber}
-              tasks={list.tasks} 
-            />
-          );
-        })}   
+class Board extends Component {
+  componentDidMount() {
+    const { getDataFromDb } = this.props;
+    getDataFromDb();
+  }
+  render() {
+    const {
+      addNewTask,
+      combineAddTask, 
+      editList,
+      lists,  
+      removeListWithTasks, 
+      combineRemoveSingleTask,
+      editTask,
+    } = this.props;
+    const listsNumber = lists.length;
+    return (
+      <div className="container">
+        <div className="row">
+          {lists.map((list, index) => {
+            return (
+              <List
+                combineAddTask={combineAddTask} 
+                addNewTask={addNewTask} 
+                editList={editList}
+                editTask={editTask}
+                removeListWithTasks={removeListWithTasks}
+                combineRemoveSingleTask={combineRemoveSingleTask}
+                key={list.id} 
+                id={list.id} 
+                name={list.name} 
+                order={index} 
+                listsNumber={listsNumber}
+                tasks={list.tasks} 
+              />
+            );
+          })}   
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 const mapStateToProps = (state) => ({
@@ -48,11 +59,13 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+  combineAddTask,
   addNewTask,
   editList,
   removeListWithTasks,
-  removeSingleTask,
   editTask,
-}
+  combineRemoveSingleTask,
+  getDataFromDb,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Board);

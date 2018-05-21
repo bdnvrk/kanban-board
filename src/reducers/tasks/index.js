@@ -4,19 +4,10 @@ import {
   REMOVE_TASKS, 
   REMOVE_SINGLE_TASK,
   EDIT_TASK, 
+  SAVED_DATA_FROM_DATABASE 
 } from '../../actions/types';
 
-const initialState = {
-  task_0: {
-    id: 'task_0',
-    name: 'Autoryzacja',
-    description: 'qdsnjgndskjg',
-    priority: 'high',
-    deadline: '2018-05-12'
-  },
-};
-
-export default (state = initialState, action) => {
+export default (state = {}, action) => {
   switch (action.type) {
     case ADD_NEW_TASK: {
       const { taskId, taskData } = action.payload;
@@ -48,6 +39,11 @@ export default (state = initialState, action) => {
           id,
           ...taskData,
         },
+      }
+    }
+    case SAVED_DATA_FROM_DATABASE: {
+      return {
+        ...action.data.tasks
       }
     }
     default:
