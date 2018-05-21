@@ -5,7 +5,7 @@ import { createLogger } from 'redux-logger'
 import { createStore, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import rootReducer from '../../reducers';
-import Board from '../Board';
+import MainView from '../MainView';
 import Header from '../Header';
 import Footer from '../Footer';
 
@@ -23,7 +23,7 @@ class AppComponent extends Component {
       <Provider store={store}>
         <div className="App">
           <Header />
-          <Board />
+          <MainView />
           <Footer />
         </div>
       </Provider>

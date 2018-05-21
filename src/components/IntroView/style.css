@@ -1,0 +1,13 @@
+.intro-view {
+  border-top: 4px solid #facc75;
+  border-radius: 4px;
+  text-align: center;
+  background: #fff;
+  border-bottom: 0;
+  width: 70%;
+  padding: 20px;
+}
+
+.login-btn {
+  width: 20%;
+}

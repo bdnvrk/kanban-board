@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { startAuthorization, requestLogout, getDataFromDb } from '../../actions'
+import { startAuthorization, requestLogout } from '../../actions'
 import { Navbar, Nav, NavItem, Button, Modal } from 'react-bootstrap';
 import { addNewList } from '../../actions';
 import './style.css';
@@ -9,8 +9,6 @@ class Header extends Component {
   constructor() {
     super();
     this.logoffFunction = this.logoffFunction.bind(this);
-    this.authFunction = this.authFunction.bind(this);
-    this.getData = this.getData.bind(this);
     this.textInput = React.createRef();
     this.state = {
       showModal: false,
@@ -26,16 +24,6 @@ class Header extends Component {
     this.props.requestLogout();
   }  
 
-  renderLoginButton() {
-    return (
-      <Button 
-        onClick={this.authFunction}
-        className="headerButton">
-        Zaloguj
-      </Button>
-    );
-  }
-
   renderLogutButton() {
     return (
       <Button onClick={this.logoffFunction}>
@@ -50,19 +38,38 @@ class Header extends Component {
     }));
   }
 
-  getData(e){
-    
-    this.props.getDataFromDb();
-  }
-
   addList = () => {
     const value = this.textInput.current.value;
     this.props.addNewList(value);
     this.toggleModal();
   }
 
-  render() {
+  renderTopPanelFunctions = () => {
     const { isUserAuthorized, userName } = this.props;
+
+    if ( isUserAuthorized ) {
+      return (
+        <React.Fragment>
+          <Nav pullRight className="headerForm">
+            { this.renderLogutButton() }
+            {' '/* spacing between elements */}
+            <Button 
+              bsStyle="warning" 
+              onClick={this.toggleModal}>
+                Dodaj nową listę
+            </Button>
+          </Nav>
+          <Nav pullRight>
+            <Navbar.Text>
+              { isUserAuthorized ? `Jesteś zalogowany jako: ${ userName }` : '' }
+            </Navbar.Text>
+          </Nav>
+        </React.Fragment>
+      );
+    }
+  }
+
+  render() {
     return (
       <div>
         <Navbar>
@@ -79,27 +86,7 @@ class Header extends Component {
               Link
             </NavItem>
           </Nav>
-          
-          <Nav pullRight className="headerForm">
-            
-            { isUserAuthorized ? this.renderLogutButton() : this.renderLoginButton() }
-            {' '/* spacing between elements */}
-            <Button 
-              bsStyle="warning" 
-              onClick={this.getData}>
-                test
-            </Button> 
-            <Button 
-              bsStyle="warning" 
-              onClick={this.toggleModal}>
-                Dodaj nową listę
-            </Button>
-          </Nav>
-          <Nav pullRight>
-            <Navbar.Text>
-              { isUserAuthorized ? `Jesteś zalogowany jako: ${ userName }` : '' }
-            </Navbar.Text>
-          </Nav>
+          {this.renderTopPanelFunctions}  
         </Navbar>
         
         <Modal show={this.state.showModal} onHide={this.toggleModal}>
@@ -129,8 +116,7 @@ const mapStateToProps = (state) => (
 const mapDispatchToProps = {
   addNewList,
   startAuthorization,
-  requestLogout,
-  getDataFromDb
+  requestLogout
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);
