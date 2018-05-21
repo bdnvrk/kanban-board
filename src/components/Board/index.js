@@ -2,17 +2,24 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
+import List from '../List';
 import { 
-  addNewTask, 
+  addNewTask,
+  combineAddTask, 
   editList, 
   removeListWithTasks, 
-  removeSingleTask,
+  combineRemoveSingleTask,
+  getDataFromDb,
+  editTask,
   moveTask,
 } from '../../actions';
-import List from '../List';
 
 class Board extends Component {
-  render () {
+  componentDidMount() {
+    const { getDataFromDb } = this.props;
+    getDataFromDb();
+  }
+  render() {
     const { lists } = this.props;
     const listsNumber = lists.length;
     return (
@@ -20,11 +27,13 @@ class Board extends Component {
         <div className="row">
           {lists.map((list, index) => {
             return (
-              <List 
+              <List
+                combineAddTask={this.props.combineAddTask} 
                 addNewTask={this.props.addNewTask} 
-                editList={this.props.editList} 
-                removeListWithTasks={this.props.removeListWithTasks}
-                removeSingleTask={this.props.removeSingleTask}
+                editList={this.props.editList}
+                editTask={editTask}
+                removeListWithTasks={removeListWithTasks}
+                combineRemoveSingleTask={combineRemoveSingleTask}
                 key={list.id} 
                 id={list.id} 
                 name={list.name} 
@@ -47,12 +56,15 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+  combineAddTask,
   addNewTask,
   editList,
   removeListWithTasks,
-  removeSingleTask,
+  editTask,
+  combineRemoveSingleTask,
+  getDataFromDb,
   moveTask,
-}
+};
 
 const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Board);
 

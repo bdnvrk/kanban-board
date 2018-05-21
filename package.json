@@ -10,6 +10,7 @@
     "react-dnd": "^2.6.0",
     "react-dnd-html5-backend": "^2.6.0",
     "react-dom": "^16.3.0",
+    "react-fontawesome": "^1.6.1",
     "react-redux": "^5.0.7",
     "react-redux-firebase": "^2.0.6",
     "react-scripts": "1.1.1",
@@ -28,7 +29,6 @@
   "devDependencies": {
     "gh-pages": "^1.1.0",
     "redux-devtools-extension": "^2.13.2",
-    "redux-logger": "^3.0.6",
-    "react-fontawesome": "^1.6.1"
+    "redux-logger": "^3.0.6"
   }
 }

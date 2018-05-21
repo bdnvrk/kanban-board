@@ -1,4 +1,3 @@
-import uniqueId from 'lodash/fp/uniqueId';
 import findIndex from 'lodash/fp/findIndex';
 import { 
   ADD_NEW_LIST, 
@@ -6,29 +5,22 @@ import {
   EDIT_LIST, 
   REMOVE_LIST, 
   REMOVE_SINGLE_TASK,
+<<<<<<< HEAD
   MOVE_TASK,
+=======
+  SAVED_DATA_FROM_DATABASE
+>>>>>>> e4ab1b3d2c71b14618984bcc096ad1e9e06538c5
 } from '../../actions/types';
 
-const initialId = uniqueId('list_');
-
-const initialState = [
-  {
-    id: initialId,
-    name: 'Twoja pierwsza lista',
-    tasks: ['task_0'],
-  },
-];
-
-export default (state = initialState, action) => {
+export default (state = [], action) => {
   switch (action.type) {
     case ADD_NEW_LIST: {
       const { name } = action.payload;
-      const id = uniqueId('list_');
 
       return [
         ...state,
         {
-          id: id,
+          id: window.getListId(),
           name: name,
           tasks: [],
         },
@@ -86,6 +78,7 @@ export default (state = initialState, action) => {
 
       return updatedState;
     }
+<<<<<<< HEAD
     case MOVE_TASK: {
       const { taskId, currentListId, nextListId } = action.payload;
       const currentListIndex = findIndex(list => list.id === currentListId)(state);
@@ -107,6 +100,10 @@ export default (state = initialState, action) => {
         tasks: tasksList2,
       };
       return updatedState;
+=======
+    case SAVED_DATA_FROM_DATABASE: {
+      return action.data.lists
+>>>>>>> e4ab1b3d2c71b14618984bcc096ad1e9e06538c5
     }
     default:
       return state

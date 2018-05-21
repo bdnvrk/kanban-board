@@ -65,10 +65,11 @@ class List extends Component {
                     id={task.id}
                     name={task.name}
                     priority={task.priority}
+                    description={task.description}
                     deadline={task.deadline}
-                    removeSingleTask={this.props.removeSingleTask}
+                    combineRemoveSingleTask={this.props.combineRemoveSingleTask}
                     listId={id}
-                    lists={this.props.lists}
+                    editTask={this.props.editTask}
                     moveTask={this.props.moveTask}
                   />
                 );
@@ -78,7 +79,8 @@ class List extends Component {
         </Panel>
         <AddTaskModal 
           listId={id} 
-          showModal={this.state.showAddModal} 
+          showModal={this.state.showAddModal}
+          combineAddTask={this.props.combineAddTask} 
           addNewTask={this.props.addNewTask} 
           toggleModal={this.toggleAddModal}
         />

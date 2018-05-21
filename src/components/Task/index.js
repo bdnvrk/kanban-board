@@ -3,6 +3,7 @@ import { DropdownButton, MenuItem, Label } from 'react-bootstrap';
 import { DragSource } from 'react-dnd';
 import FontAwesome from 'react-fontawesome';
 import MoveTaskModal from '../MoveTaskModal';
+import EditTaskModal from '../EditTaskModal';
 import './style.css';
 
 class Task extends Component {
@@ -10,20 +11,26 @@ class Task extends Component {
     super();
     this.state = {
       showMoveModal: false,
-    }
+      showEditModal: false,
+    };
   }
   toggleMoveModal = () => {
     this.setState(state => ({
       showMoveModal: !state.showMoveModal,
     }));
   }
+  toggleEditModal = () => {
+    this.setState(state => ({
+      showEditModal: !state.showEditModal,
+    }));
+  }
   remove = () => {
-    const { removeSingleTask, id, listId } = this.props;
+    const { combineRemoveSingleTask, id, listId } = this.props;
 
-    removeSingleTask(id, listId);
+    combineRemoveSingleTask(id, listId);
   }
   render() {
-    const { connectDragSource } = this.props;
+    const { connectDragSource, name, priority, deadline, description } = this.props;
     return connectDragSource(
       <li className="task">
         <div className="data">
@@ -37,7 +44,7 @@ class Task extends Component {
             bsStyle="link"
             title={<FontAwesome name="pencil" />}
           >
-            <MenuItem eventKey="1" onClick={() => {}}>Edytuj</MenuItem>
+            <MenuItem eventKey="1" onClick={this.toggleEditModal}>Edytuj</MenuItem>
             <MenuItem eventKey="2" onClick={this.remove}>Usuń</MenuItem>
             <MenuItem eventKey="3" onClick={this.toggleMoveModal}>Przenieś</MenuItem>
           </DropdownButton>
@@ -50,6 +57,15 @@ class Task extends Component {
           currentListId={this.props.listId}
           taskId={this.props.id}
         />
+        {this.state.showEditModal && 
+          <EditTaskModal 
+            initialValues={{ name, priority, deadline, description }} 
+            showModal={this.state.showEditModal} 
+            toggleModal={this.toggleEditModal}
+            editTask={this.props.editTask}
+            taskId={this.props.id}
+          />
+        }
       </li>
     );
   }

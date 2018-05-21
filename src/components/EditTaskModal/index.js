@@ -1,23 +1,16 @@
 import React, {Component} from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
+import uniqueId from 'lodash/fp/uniqueId';
 import { Field, reduxForm } from 'redux-form';
 import FieldWithErrors from '../FieldWithErrors';
 import { isNotEmpty, maxLength20, isNotPastDate } from '../../validation';
 
-class AddTaskModal extends Component {
-  componentWillReceiveProps(nextProps) {
-    if (this.props.showModal !== nextProps.showModal) {
-      this.props.initialize();
-    }
-  }
+class EditTaskModal extends Component {
   render() {
-    const { showModal, toggleModal, handleSubmit, listId, reset, combineAddTask } = this.props;
+    const { showModal, editTask, toggleModal, handleSubmit, taskId } = this.props;
     const onSubmit = handleSubmit(data => {
-      const taskId = window.getTaskId();
-      
-      combineAddTask(listId, taskId, data)
+      editTask(taskId, data);
       toggleModal();
-      reset();
     });
     return (
       <form onSubmit={onSubmit}>
@@ -61,12 +54,12 @@ class AddTaskModal extends Component {
                 name="deadline"
                 component={FieldWithErrors}
                 type="date"
-                validate={[isNotEmpty, isNotPastDate]}
+                validate={[isNotEmpty]}
               />
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={onSubmit} type="submit">Dodaj</Button>
+            <Button onClick={onSubmit} type="submit">Zapisz</Button>
             <Button onClick={toggleModal}>Anuluj</Button>
           </Modal.Footer>
         </Modal>
@@ -80,4 +73,4 @@ export default reduxForm({
   enableReinitialize: true,
   destroyOnUnmount: false,
   keepDirtyOnReinitialize: true,
-})(AddTaskModal)
+})(EditTaskModal)
