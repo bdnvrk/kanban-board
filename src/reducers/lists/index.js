@@ -1,4 +1,3 @@
-import uniqueId from 'lodash/fp/uniqueId';
 import findIndex from 'lodash/fp/findIndex';
 import { 
   ADD_NEW_LIST, 
@@ -9,26 +8,15 @@ import {
   SAVED_DATA_FROM_DATABASE
 } from '../../actions/types';
 
-const initialId = uniqueId('list_');
-
-const initialState = [
-  {
-    id: initialId,
-    name: 'Twoja pierwsza lista',
-    tasks: ['task_0'],
-  },
-];
-
-export default (state = initialState, action) => {
+export default (state = [], action) => {
   switch (action.type) {
     case ADD_NEW_LIST: {
       const { name } = action.payload;
-      const id = uniqueId('list_');
 
       return [
         ...state,
         {
-          id: id,
+          id: window.getListId(),
           name: name,
           tasks: [],
         },
