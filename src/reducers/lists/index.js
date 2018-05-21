@@ -1,11 +1,13 @@
 import uniqueId from 'lodash/fp/uniqueId';
 import findIndex from 'lodash/fp/findIndex';
+import without from 'lodash/fp/without';
 import { 
   ADD_NEW_LIST, 
   ADD_NEW_TASK, 
   EDIT_LIST, 
   REMOVE_LIST, 
-  REMOVE_SINGLE_TASK
+  REMOVE_SINGLE_TASK,
+  MOVE_TASK,
 } from '../../actions/types';
 
 const initialId = uniqueId('list_');
@@ -85,7 +87,27 @@ export default (state = initialState, action) => {
 
       return updatedState;
     }
+    case MOVE_TASK: {
+      const { taskId, currentListId, nextListId } = action.payload;
+      const currentListIndex = findIndex(list => list.id === currentListId)(state);
+      const nextListIndex = findIndex(list => list.id === nextListId)(state);
+
+      const tasksList1 = without(state[currentListIndex].tasks, taskId);
+      const tasksList2 = state[nextListIndex].tasks.concat(taskId);
+
+      const updatedState = state.slice();
+      updatedState[currentListIndex] = {
+        ...state[currentListIndex],
+        tasks: tasksList1,
+      };
+      updatedState[nextListIndex] = {
+        ...state[nextListIndex],
+        tasks: tasksList2,
+      };
+      return updatedState;
+    }
     default:
       return state
   }
 };
+

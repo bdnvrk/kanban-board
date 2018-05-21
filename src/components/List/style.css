@@ -3,6 +3,10 @@
   padding-right: 5px;
 }
 
+.list .panel {
+  position: relative;
+}
+
 .list .panel-heading {
   border-top: 4px solid #facc75;
   text-align: left;
@@ -45,4 +49,16 @@
 
 .menu .caret {
   display: none; /* remove default bootstrap caret from dropdown */
+}
+
+.mask {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(199, 224, 40, 0.15);
+  z-index: 10;
+}
+
+.mask.isOver {
+  background: rgba(24, 201, 65, 0.15);
 }

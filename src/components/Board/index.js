@@ -1,43 +1,45 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { DragDropContext } from 'react-dnd'
+import HTML5Backend from 'react-dnd-html5-backend'
 import { 
   addNewTask, 
   editList, 
   removeListWithTasks, 
-  removeSingleTask 
+  removeSingleTask,
+  moveTask,
 } from '../../actions';
 import List from '../List';
 
-const Board = ({ 
-  lists, 
-  addNewTask, 
-  editList, 
-  removeListWithTasks, 
-  removeSingleTask 
-}) => {
-  const listsNumber = lists.length;
-  return (
-    <div className="container">
-      <div className="row">
-        {lists.map((list, index) => {
-          return (
-            <List 
-              addNewTask={addNewTask} 
-              editList={editList} 
-              removeListWithTasks={removeListWithTasks}
-              removeSingleTask={removeSingleTask}
-              key={list.id} 
-              id={list.id} 
-              name={list.name} 
-              order={index} 
-              listsNumber={listsNumber}
-              tasks={list.tasks} 
-            />
-          );
-        })}   
+class Board extends Component {
+  render () {
+    const { lists } = this.props;
+    const listsNumber = lists.length;
+    return (
+      <div className="container">
+        <div className="row">
+          {lists.map((list, index) => {
+            return (
+              <List 
+                addNewTask={this.props.addNewTask} 
+                editList={this.props.editList} 
+                removeListWithTasks={this.props.removeListWithTasks}
+                removeSingleTask={this.props.removeSingleTask}
+                key={list.id} 
+                id={list.id} 
+                name={list.name} 
+                order={index} 
+                listsNumber={listsNumber}
+                tasks={list.tasks} 
+                lists={lists}
+                moveTask={this.props.moveTask}
+              />
+            );
+          })}   
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 const mapStateToProps = (state) => ({
@@ -49,6 +51,9 @@ const mapDispatchToProps = {
   editList,
   removeListWithTasks,
   removeSingleTask,
+  moveTask,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Board);
+const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Board);
+
+export default DragDropContext(HTML5Backend)(ConnectedComponent);
