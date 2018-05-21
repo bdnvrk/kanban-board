@@ -69,6 +69,7 @@ class List extends Component {
                     deadline={task.deadline}
                     combineRemoveSingleTask={this.props.combineRemoveSingleTask}
                     listId={id}
+                    lists={this.props.lists}
                     editTask={this.props.editTask}
                     moveTask={this.props.moveTask}
                   />
