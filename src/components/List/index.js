@@ -98,12 +98,12 @@ class List extends Component {
 }
 
 const target = {
-	drop(props, monitor) {
+  drop(props, monitor) {
     const { moveTask, id } = props;
     const { taskId, currentListId } = monitor.getItem();
 
     moveTask(taskId, currentListId, id);
-	},
+  },
   canDrop: (props, monitor) => {
     const { id } = props;
     const { currentListId } = monitor.getItem();
@@ -113,9 +113,9 @@ const target = {
 }
 
 const collect = (connect, monitor) => ({
-	connectDropTarget: connect.dropTarget(),
-	isOver: monitor.isOver(),
-	canDrop: monitor.canDrop(),
+  connectDropTarget: connect.dropTarget(),
+  isOver: monitor.isOver(),
+  canDrop: monitor.canDrop(),
 });
 
 const mapStateToProps = (state, props) => {
