@@ -19,6 +19,8 @@ class MainView extends Component {
   renderMainView() {    
     const { authorization } = this.props;
 
+    return <Board />;
+
     if(authorization.user.loggedIn) {
       return <Board />
     } else {

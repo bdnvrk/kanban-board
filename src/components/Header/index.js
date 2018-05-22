@@ -47,11 +47,11 @@ class Header extends Component {
   renderTopPanelFunctions = () => {
     const { isUserAuthorized, userName } = this.props;
 
-    if ( isUserAuthorized ) {
+    //if ( isUserAuthorized ) {
       return (
         <React.Fragment>
           <Nav pullRight className="headerForm">
-            { this.renderLogutButton() }
+            { /*this.renderLogutButton()*/ }
             {' '/* spacing between elements */}
             <Button 
               bsStyle="warning" 
@@ -66,7 +66,7 @@ class Header extends Component {
           </Nav>
         </React.Fragment>
       );
-    }
+    //}
   }
 
   render() {

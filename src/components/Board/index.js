@@ -13,6 +13,7 @@ import {
   editTask,
   moveTask,
 } from '../../actions';
+import './style.css';
 
 class Board extends Component {
   componentDidMount() {
@@ -23,29 +24,27 @@ class Board extends Component {
     const { lists } = this.props;
     const listsNumber = lists.length;
     return (
-      <div className="container">
-        <div className="row">
-          {lists.map((list, index) => {
-            return (
-              <List
-                combineAddTask={this.props.combineAddTask} 
-                addNewTask={this.props.addNewTask} 
-                editList={this.props.editList}
-                editTask={editTask}
-                removeListWithTasks={removeListWithTasks}
-                combineRemoveSingleTask={combineRemoveSingleTask}
-                key={list.id} 
-                id={list.id} 
-                name={list.name} 
-                order={index} 
-                listsNumber={listsNumber}
-                tasks={list.tasks} 
-                lists={lists}
-                moveTask={this.props.moveTask}
-              />
-            );
-          })}   
-        </div>
+      <div className="board">
+        {lists.map((list, index) => {
+          return (
+            <List
+              combineAddTask={this.props.combineAddTask} 
+              addNewTask={this.props.addNewTask} 
+              editList={this.props.editList}
+              editTask={editTask}
+              removeListWithTasks={removeListWithTasks}
+              combineRemoveSingleTask={combineRemoveSingleTask}
+              key={list.id} 
+              id={list.id} 
+              name={list.name} 
+              order={index} 
+              listsNumber={listsNumber}
+              tasks={list.tasks} 
+              lists={lists}
+              moveTask={this.props.moveTask}
+            />
+          );
+        })}   
       </div>
     );
   }
