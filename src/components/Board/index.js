@@ -31,9 +31,9 @@ class Board extends Component {
               combineAddTask={this.props.combineAddTask} 
               addNewTask={this.props.addNewTask} 
               editList={this.props.editList}
-              editTask={editTask}
-              removeListWithTasks={removeListWithTasks}
-              combineRemoveSingleTask={combineRemoveSingleTask}
+              editTask={this.props.editTask}
+              removeListWithTasks={this.props.removeListWithTasks}
+              combineRemoveSingleTask={this.props.combineRemoveSingleTask}
               key={list.id} 
               id={list.id} 
               name={list.name} 
