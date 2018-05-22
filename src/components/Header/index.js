@@ -78,14 +78,6 @@ class Header extends Component {
               <a href="#home">Kanban Board</a>
             </Navbar.Brand>
           </Navbar.Header>
-          <Nav>
-            <NavItem eventKey={1} href="#">
-              Link
-            </NavItem>
-            <NavItem eventKey={2} href="#">
-              Link
-            </NavItem>
-          </Nav>
           {this.renderTopPanelFunctions()}  
         </Navbar>
         
