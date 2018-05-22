@@ -6,20 +6,18 @@ import { startAuthorization } from '../../actions';
 
 class MainView extends Component {
 
-  // constructor() {
-  //   super();
-  //   this.authFunction = this.authFunction.bind(this);
-  // }
+  constructor() {
+    super();
+    this.authFunction = this.authFunction.bind(this);
+  }
 
-  // authFunction(e) {
-  //   e.preventDefault();
-  //   this.props.startAuthorization();
-  // }
+  authFunction(e) {
+    e.preventDefault();
+    this.props.startAuthorization();
+  }
 
   renderMainView() {    
     const { authorization } = this.props;
-
-    return <Board />;
 
     if(authorization.user.loggedIn) {
       return <Board />
