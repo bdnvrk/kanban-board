@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { DragDropContext } from 'react-dnd'
 import HTML5Backend from 'react-dnd-html5-backend'
 import List from '../List';
-import Filters from '../Filters';
 import { 
   addNewTask,
   combineAddTask, 

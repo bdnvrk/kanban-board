@@ -88,10 +88,11 @@ const savedDataToDatabase = () => ({
 
 export const updateDatabase = () => {
   return (dispatch, getState) => {
-    const { lists, tasks } = getState();
+    const { lists, tasks, users } = getState();
     const data = {
       '/lists/': lists,
-      '/tasks/': tasks 
+      '/tasks/': tasks,
+      '/users/': users,
     };
     dispatch(saveDataToDatabase());
     return database.ref().update(data).then((status) => {

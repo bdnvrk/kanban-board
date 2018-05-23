@@ -12,7 +12,6 @@ class AddTaskModal extends Component {
   }
   getUsersList = () => {
     const { users } = this.props;
-    console.log("users", users);
     return Object.keys(users).map(user => (
       <option value={user}>{users[user]}</option>
     ));
@@ -76,7 +75,7 @@ class AddTaskModal extends Component {
                 component={FieldWithErrors}
                 componentClass="select"
                 type="text"
-                //validate={[isNotEmpty]}
+                validate={[isNotEmpty]}
               >
                 <option value="">Wybierz</option>
                 {this.getUsersList()}

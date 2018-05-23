@@ -8,7 +8,7 @@ class EditTaskModal extends Component {
   getUsersList = () => {
     const { users } = this.props;
     return Object.keys(users).map(user => (
-      <option value={user}>{users[user]}</option>
+      <option key={user} value={user}>{users[user]}</option>
     ));
   }
   render() {
