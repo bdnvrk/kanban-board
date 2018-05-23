@@ -1,0 +1,14 @@
+.board {
+  padding: 10px 20px;
+  height: calc(100vh - 102px);
+  display: flex;
+  width: auto;
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.board:after {
+  clear: both;
+  content: '';
+  display: block;
+}

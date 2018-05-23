@@ -1,6 +1,7 @@
 .navbar {
   background-color: #fff;
   border-radius: 0;
+  margin-bottom: 0;
 }
 
 .headerForm * {

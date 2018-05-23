@@ -37,13 +37,13 @@ class List extends Component {
     const { name, id, tasksData, order, connectDropTarget } = this.props;
     const maskClass = this.props.isOver ? 'mask isOver' : 'mask';
     return connectDropTarget(
-      <div className="col-xs-3 list">
+      <div className="list">
         <Panel>
           {this.props.canDrop && <div className={maskClass}></div>}
           <Panel.Heading>
             {name}
             {' '}
-            <span className="counter">{this.props.tasks.length}</span>
+            <span className="counter">{this.props.tasks && this.props.tasks.length}</span>
             <div className="menu">
               <DropdownButton
                 id="list-menu"

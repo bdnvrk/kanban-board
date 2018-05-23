@@ -1,19 +1,32 @@
 .list {
-  padding-left: 5px;
-  padding-right: 5px;
+  padding-left: 3px;
+  padding-right: 3px;
+  flex: 0 0 auto;
+  width: 300px;
+  float: left;
+  position: relative;
+  height: 100%;
 }
 
 .list .panel {
   position: relative;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  flex-direction: column;
+  max-height: 100%;
 }
 
 .list .panel-heading {
+  height: 50px;
   border-top: 4px solid #facc75;
   text-align: left;
   background: #fff;
   border-bottom: 0;
   font-size: 15px;
   font-weight: 500;
+  -webkit-box-flex: 0;
+  flex: 0 0 auto;
 }
 
 .list .panel-heading .counter {
@@ -29,6 +42,11 @@
 
 .list .panel-body {
   padding: 0 15px 5px 15px;
+  max-height: calc(100% - 50px);
+  overflow-y: auto;
+  -webkit-box-flex: 1;
+  -ms-flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
 .list .panel-body .tasksList {
