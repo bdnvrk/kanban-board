@@ -1,4 +1,5 @@
 import omit from 'lodash/fp/omit';
+import get from 'lodash/fp/get';
 import { 
   ADD_NEW_TASK, 
   REMOVE_TASKS, 
@@ -42,9 +43,7 @@ export default (state = {}, action) => {
       }
     }
     case SAVED_DATA_FROM_DATABASE: {
-      return {
-        ...action.data.tasks
-      }
+      return get('data.tasks')(action) || {};
     }
     default:
       return state

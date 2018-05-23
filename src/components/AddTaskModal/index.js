@@ -10,6 +10,13 @@ class AddTaskModal extends Component {
       this.props.initialize();
     }
   }
+  getUsersList = () => {
+    const { users } = this.props;
+    console.log("users", users);
+    return Object.keys(users).map(user => (
+      <option value={user}>{users[user]}</option>
+    ));
+  }
   render() {
     const { showModal, toggleModal, handleSubmit, listId, reset, combineAddTask } = this.props;
     const onSubmit = handleSubmit(data => {
@@ -63,6 +70,17 @@ class AddTaskModal extends Component {
                 type="date"
                 validate={[isNotEmpty, isNotPastDate]}
               />
+              <Field
+                label="Przypisz do"
+                name="user"
+                component={FieldWithErrors}
+                componentClass="select"
+                type="text"
+                validate={[isNotEmpty]}
+              >
+                <option value="">Wybierz</option>
+                {this.getUsersList()}
+              </Field>
             </Form>
           </Modal.Body>
           <Modal.Footer>

@@ -7,16 +7,29 @@ function idProvider(initialValue, prefix) {
 };
 
 function initializeIdProviders (values) {
+  if (!values) {
+    window.getListId = idProvider(0, 'list');
+    window.getTaskId = idProvider(0, 'task');
+    return;
+  }
+
   const { lists, tasks } = values;
 
-  const lastListId = lists.pop().id;
-  const initialListId = parseInt(lastListId.slice(-1), 10);
+  if (!lists) {
+    window.getListId = idProvider(0, 'list');
+  } else {
+    const lastListId = lists.pop().id;
+    const initialListId = parseInt(lastListId.slice(-1), 10);
+    window.getListId = idProvider(initialListId, 'list');
+  }
 
-  const lastTaskId = Object.keys(tasks).sort().pop();
-  const initialTaskId = parseInt(lastTaskId.slice(-1), 10);
-  
-  window.getListId = idProvider(initialListId, 'list');
-  window.getTaskId = idProvider(initialTaskId, 'task');
+  if (!tasks) {
+    window.getTaskId = idProvider(0, 'task');
+  } else {
+    const lastTaskId = Object.keys(tasks).sort().pop();
+    const initialTaskId = parseInt(lastTaskId.slice(-1), 10);
+    window.getTaskId = idProvider(initialTaskId, 'task');
+  }
 }
 
 export default initializeIdProviders;

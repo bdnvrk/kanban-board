@@ -101,7 +101,6 @@ export const updateDatabase = () => {
   /**TODO zapisywanie danych zgodnie z ustalona hierarchia w storze */
 }
 
-
 export const getDataFromDb = () => {
   return dispatch => {
     dispatch(saveDataToDatabase());

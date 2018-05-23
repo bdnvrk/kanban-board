@@ -34,7 +34,7 @@ class List extends Component {
     removeListWithTasks(id, tasks);
   }
   render() {
-    const { name, id, tasksData, order, connectDropTarget } = this.props;
+    const { name, id, tasksData, order, connectDropTarget, users } = this.props;
     const maskClass = this.props.isOver ? 'mask isOver' : 'mask';
     return connectDropTarget(
       <div className="list">
@@ -62,16 +62,13 @@ class List extends Component {
                 return (
                   <Task
                     key={`task-${task.id}`}
-                    id={task.id}
-                    name={task.name}
-                    priority={task.priority}
-                    description={task.description}
-                    deadline={task.deadline}
+                    taskData={task}
                     combineRemoveSingleTask={this.props.combineRemoveSingleTask}
                     listId={id}
                     lists={this.props.lists}
                     editTask={this.props.editTask}
                     moveTask={this.props.moveTask}
+                    users={users}
                   />
                 );
               })(tasksData)}
@@ -84,6 +81,7 @@ class List extends Component {
           combineAddTask={this.props.combineAddTask} 
           addNewTask={this.props.addNewTask} 
           toggleModal={this.toggleAddModal}
+          users={users}
         />
         {this.state.showEditModal && 
           <EditListModal 
@@ -124,6 +122,7 @@ const collect = (connect, monitor) => ({
 const mapStateToProps = (state, props) => {
   return {
     tasksData: pick(props.tasks, state.tasks),
+    users: state.users,
   };
 }
 
