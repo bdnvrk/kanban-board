@@ -31,7 +31,6 @@ class Task extends Component {
   }
   render() {
     const { connectDragSource, taskData } = this.props;
-    console.log("taskData", taskData);
     return connectDragSource(
       <li className="task">
         <div className="data">

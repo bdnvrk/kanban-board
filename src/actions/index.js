@@ -148,3 +148,7 @@ export const editTask = (id, taskData) => ({
   type: types.EDIT_TASK,
   payload: { id, taskData },
 });
+
+export const toggleFilter = () => ({
+  type: types.TOGGLE_FILTER,
+});

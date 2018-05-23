@@ -76,7 +76,7 @@ class AddTaskModal extends Component {
                 component={FieldWithErrors}
                 componentClass="select"
                 type="text"
-                validate={[isNotEmpty]}
+                //validate={[isNotEmpty]}
               >
                 <option value="">Wybierz</option>
                 {this.getUsersList()}

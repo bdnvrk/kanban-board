@@ -5,6 +5,7 @@ import authorization from './authorization';
 import tasks from './tasks';
 import databaseConnection from './databaseConnection';
 import users from './users';
+import filterEnabled from './filter';
 
 export default combineReducers({
   authorization,
@@ -13,4 +14,5 @@ export default combineReducers({
   form: formReducer,
   databaseConnection,
   users,
+  filterEnabled,
 });
