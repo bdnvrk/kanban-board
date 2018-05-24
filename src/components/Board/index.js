@@ -6,11 +6,11 @@ import List from '../List';
 import { 
   addNewTask,
   combineAddTask, 
-  editList, 
+  combineEditList, 
   removeListWithTasks, 
   combineRemoveSingleTask,
   getDataFromDb,
-  editTask,
+  combineEditTask,
   moveTask,
 } from '../../actions';
 import './style.css';
@@ -30,8 +30,8 @@ class Board extends Component {
             <List
               combineAddTask={this.props.combineAddTask} 
               addNewTask={this.props.addNewTask} 
-              editList={this.props.editList}
-              editTask={this.props.editTask}
+              editList={this.props.combineEditList}
+              editTask={this.props.combineEditTask}
               removeListWithTasks={this.props.removeListWithTasks}
               combineRemoveSingleTask={this.props.combineRemoveSingleTask}
               key={list.id} 
@@ -57,9 +57,9 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   combineAddTask,
   addNewTask,
-  editList,
+  combineEditList,
   removeListWithTasks,
-  editTask,
+  combineEditTask,
   combineRemoveSingleTask,
   getDataFromDb,
   moveTask,
