@@ -3,6 +3,8 @@ import { connect } from 'react-redux';
 import { DropTarget } from 'react-dnd';
 import pick from 'lodash/fp/pick';
 import map from 'lodash/fp/map';
+import get from 'lodash/fp/get';
+import filter from 'lodash/fp/filter';
 import Panel from 'react-bootstrap/lib/Panel';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
@@ -33,9 +35,16 @@ class List extends Component {
     const { removeListWithTasks, id, tasks } = this.props;
     removeListWithTasks(id, tasks);
   }
+  filterTasks = (tasks) => {
+    const  { filterEnabled, loggedUser } = this.props;
+    if (!filterEnabled || !loggedUser) return tasks;
+
+    return filter(task => task.user === loggedUser)(tasks);
+  }
   render() {
-    const { name, id, tasksData, order, connectDropTarget } = this.props;
+    const { name, id, tasksData, order, connectDropTarget, users } = this.props;
     const maskClass = this.props.isOver ? 'mask isOver' : 'mask';
+    const filteredTasks = this.filterTasks(tasksData);
     return connectDropTarget(
       <div className="list">
         <Panel>
@@ -43,7 +52,7 @@ class List extends Component {
           <Panel.Heading>
             {name}
             {' '}
-            <span className="counter">{this.props.tasks && this.props.tasks.length}</span>
+            <span className="counter">{Object.keys(filteredTasks).length}</span>
             <div className="menu">
               <DropdownButton
                 id="list-menu"
@@ -62,19 +71,16 @@ class List extends Component {
                 return (
                   <Task
                     key={`task-${task.id}`}
-                    id={task.id}
-                    name={task.name}
-                    priority={task.priority}
-                    description={task.description}
-                    deadline={task.deadline}
+                    taskData={task}
                     combineRemoveSingleTask={this.props.combineRemoveSingleTask}
                     listId={id}
                     lists={this.props.lists}
                     editTask={this.props.editTask}
                     moveTask={this.props.moveTask}
+                    users={users}
                   />
                 );
-              })(tasksData)}
+              })(filteredTasks)}
             </ul>
           </Panel.Body>
         </Panel>
@@ -84,6 +90,7 @@ class List extends Component {
           combineAddTask={this.props.combineAddTask} 
           addNewTask={this.props.addNewTask} 
           toggleModal={this.toggleAddModal}
+          users={users}
         />
         {this.state.showEditModal && 
           <EditListModal 
@@ -124,6 +131,9 @@ const collect = (connect, monitor) => ({
 const mapStateToProps = (state, props) => {
   return {
     tasksData: pick(props.tasks, state.tasks),
+    users: state.users,
+    filterEnabled: state.filterEnabled,
+    loggedUser: get('authorization.user.userData.uid')(state),
   };
 }
 

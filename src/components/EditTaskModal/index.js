@@ -5,6 +5,12 @@ import FieldWithErrors from '../FieldWithErrors';
 import { isNotEmpty, maxLength20 } from '../../validation';
 
 class EditTaskModal extends Component {
+  getUsersList = () => {
+    const { users } = this.props;
+    return Object.keys(users).map(user => (
+      <option key={user} value={user}>{users[user]}</option>
+    ));
+  }
   render() {
     const { showModal, editTask, toggleModal, handleSubmit, taskId } = this.props;
     const onSubmit = handleSubmit(data => {
@@ -55,6 +61,17 @@ class EditTaskModal extends Component {
                 type="date"
                 validate={[isNotEmpty]}
               />
+              <Field
+                label="Przypisz do"
+                name="user"
+                component={FieldWithErrors}
+                componentClass="select"
+                type="text"
+                validate={[isNotEmpty]}
+              >
+                <option value="">Wybierz</option>
+                {this.getUsersList()}
+              </Field>
             </Form>
           </Modal.Body>
           <Modal.Footer>

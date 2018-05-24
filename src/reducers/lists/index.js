@@ -1,4 +1,5 @@
 import findIndex from 'lodash/fp/findIndex';
+import get from 'lodash/fp/get';
 import { 
   ADD_NEW_LIST, 
   ADD_NEW_TASK, 
@@ -98,7 +99,7 @@ export default (state = [], action) => {
       return updatedState;
     }
     case SAVED_DATA_FROM_DATABASE: {
-      return action.data.lists
+      return get('data.lists')(action) || [];
     }
     default:
       return state

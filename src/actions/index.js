@@ -88,10 +88,11 @@ const savedDataToDatabase = () => ({
 
 export const updateDatabase = () => {
   return (dispatch, getState) => {
-    const { lists, tasks } = getState();
+    const { lists, tasks, users } = getState();
     const data = {
       '/lists/': lists,
-      '/tasks/': tasks 
+      '/tasks/': tasks,
+      '/users/': users,
     };
     dispatch(saveDataToDatabase());
     return database.ref().update(data).then((status) => {
@@ -100,7 +101,6 @@ export const updateDatabase = () => {
   }
   /**TODO zapisywanie danych zgodnie z ustalona hierarchia w storze */
 }
-
 
 export const getDataFromDb = () => {
   return dispatch => {
@@ -148,4 +148,8 @@ export const combineRemoveSingleTask = (taskId, listId) => {
 export const editTask = (id, taskData) => ({
   type: types.EDIT_TASK,
   payload: { id, taskData },
+});
+
+export const toggleFilter = () => ({
+  type: types.TOGGLE_FILTER,
 });

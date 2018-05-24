@@ -17,3 +17,4 @@ export const REMOVE_TASKS = 'REMOVE_TASKS';
 export const REMOVE_SINGLE_TASK = 'REMOVE_SINGLE_TASK';
 export const MOVE_TASK = 'MOVE_TASK';
 export const EDIT_TASK = 'EDIT_TASK';
+export const TOGGLE_FILTER = 'TOGGLE_FILTER';

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { startAuthorization, requestLogout } from '../../actions'
-import { Navbar, Nav, NavItem, Button, Modal } from 'react-bootstrap';
+import { startAuthorization, requestLogout, toggleFilter } from '../../actions'
+import { Navbar, Nav, Button, Modal } from 'react-bootstrap';
 import { addNewList } from '../../actions';
 import './style.css';
 
@@ -50,14 +50,20 @@ class Header extends Component {
     if ( isUserAuthorized ) {
       return (
         <React.Fragment>
-          <Nav pullRight className="headerForm">
-            {this.renderLogutButton()}
-            {' '/* spacing between elements */}
+          <Nav pullLeft className="headerForm">
+            <Button 
+              bsStyle={this.props.filterEnabled ? 'warning' : 'default'}
+              onClick={this.props.toggleFilter}>
+                Pokaz moje zadania
+            </Button>
             <Button 
               bsStyle="warning" 
               onClick={this.toggleModal}>
                 Dodaj nową listę
             </Button>
+          </Nav>
+          <Nav pullRight className="headerForm">
+            {this.renderLogutButton()}
           </Nav>
           <Nav pullRight>
             <Navbar.Text>
@@ -101,14 +107,16 @@ class Header extends Component {
 const mapStateToProps = (state) => (
   {
     isUserAuthorized: state.authorization.user.loggedIn,
-    userName: state.authorization.user.userData.displayName 
+    userName: state.authorization.user.userData.displayName,
+    filterEnabled: state.filterEnabled,
   }
-)
+);
 
 const mapDispatchToProps = {
   addNewList,
   startAuthorization,
-  requestLogout
-}
+  requestLogout,
+  toggleFilter,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

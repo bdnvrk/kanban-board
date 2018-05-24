@@ -30,13 +30,13 @@ class Task extends Component {
     combineRemoveSingleTask(id, listId);
   }
   render() {
-    const { connectDragSource, name, priority, deadline, description } = this.props;
+    const { connectDragSource, taskData } = this.props;
     return connectDragSource(
       <li className="task">
         <div className="data">
-          <h3>{this.props.name}</h3>
-          <span className="priority">Priorytet: {this.props.priority}</span><br />
-          <Label bsStyle="default">{this.props.deadline}</Label>
+          <h3>{taskData.name}</h3>
+          <span className="priority">Priorytet: {taskData.priority}</span><br />
+          <Label bsStyle="default">{taskData.deadline}</Label>
         </div>
         <div className="menu">
           <DropdownButton
@@ -55,15 +55,16 @@ class Task extends Component {
           lists={this.props.lists}
           moveTask={this.props.moveTask}
           currentListId={this.props.listId}
-          taskId={this.props.id}
+          taskId={taskData.id}
         />
         {this.state.showEditModal && 
           <EditTaskModal 
-            initialValues={{ name, priority, deadline, description }} 
+            initialValues={taskData} 
             showModal={this.state.showEditModal} 
             toggleModal={this.toggleEditModal}
             editTask={this.props.editTask}
-            taskId={this.props.id}
+            taskId={taskData.id}
+            users={this.props.users}
           />
         }
       </li>
@@ -74,7 +75,7 @@ class Task extends Component {
 const boxSource = {
   beginDrag(props) {
     return {
-      taskId: props.id,
+      taskId: props.taskData.id,
       currentListId: props.listId,
     }
   },
