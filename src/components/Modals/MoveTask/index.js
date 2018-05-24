@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
-import FieldWithErrors from '../FieldWithErrors';
-import { isNotEmpty } from '../../validation';
+import FieldWithErrors from '../../FieldWithErrors';
+import { isNotEmpty } from '../../../validation';
 
 class MoveTaskModal extends Component {
   getOptions = () => {

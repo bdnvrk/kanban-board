@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { DropdownButton, MenuItem, Label } from 'react-bootstrap';
+import { DropdownButton, MenuItem, Label, Button } from 'react-bootstrap';
 import { DragSource } from 'react-dnd';
 import FontAwesome from 'react-fontawesome';
-import MoveTaskModal from '../MoveTaskModal';
-import EditTaskModal from '../EditTaskModal';
+import MoveTaskModal from '../Modals/MoveTask';
+import EditTaskModal from '../Modals/EditTask';
+import TaskDetailsModal from '../Modals/TaskDetails';
+import priorityItems from '../../constants/priorityItems';
+import getLabelFromValue from '../../helperFunctions/getLabelFromValue';
 import './style.css';
 
 class Task extends Component {
@@ -12,6 +15,7 @@ class Task extends Component {
     this.state = {
       showMoveModal: false,
       showEditModal: false,
+      showDetailsModal: false,
     };
   }
   toggleMoveModal = () => {
@@ -22,6 +26,11 @@ class Task extends Component {
   toggleEditModal = () => {
     this.setState(state => ({
       showEditModal: !state.showEditModal,
+    }));
+  }
+  toggleDetailsModal = () => {
+    this.setState(state => ({
+      showDetailsModal: !state.showDetailsModal,
     }));
   }
   remove = () => {
@@ -35,10 +44,15 @@ class Task extends Component {
       <li className="task">
         <div className="data">
           <h3>{taskData.name}</h3>
-          <span className="priority">Priorytet: {taskData.priority}</span><br />
+          <span className="priority">
+            Priorytet: {getLabelFromValue(taskData.priority, priorityItems)}
+          </span><br />
           <Label bsStyle="default">{taskData.deadline}</Label>
         </div>
         <div className="menu">
+          <Button bsStyle="link" onClick={this.toggleDetailsModal}>
+            <FontAwesome name="file" />
+          </Button>
           <DropdownButton
             id="task-menu"
             bsStyle="link"
@@ -49,6 +63,12 @@ class Task extends Component {
             <MenuItem eventKey="3" onClick={this.toggleMoveModal}>Przenieś</MenuItem>
           </DropdownButton>
         </div>
+        <TaskDetailsModal 
+          showModal={this.state.showDetailsModal} 
+          toggleModal={this.toggleDetailsModal}
+          users={this.props.users}
+          {...taskData}
+        />
         <MoveTaskModal 
           showModal={this.state.showMoveModal} 
           toggleModal={this.toggleMoveModal}

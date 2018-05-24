@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
-import FieldWithErrors from '../FieldWithErrors';
-import { isNotEmpty, maxLength20 } from '../../validation';
+import FieldWithErrors from '../../FieldWithErrors';
+import { isNotEmpty, maxLength30 } from '../../../validation';
 
 class EditListModal extends Component {
   getOptions = () => {
@@ -31,7 +31,7 @@ class EditListModal extends Component {
               name="name"
               component={FieldWithErrors}
               type="text"
-              validate={[isNotEmpty, maxLength20]}
+              validate={[isNotEmpty, maxLength30]}
             />
             <Field
               label="Kolejność"
