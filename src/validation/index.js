@@ -11,4 +11,4 @@ export const isNotPastDate = date => {
   }
 }
 
-export const maxLength20 = maxLength(20);
+export const maxLength30 = maxLength(30);

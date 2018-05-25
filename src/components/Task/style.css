@@ -26,13 +26,22 @@
 
 .task .data {
   float: left;
-  width: calc(100% - 20px);
+  width: calc(100% - 35px);
 }
 
 .task .menu {
-  width: 20px;
+  width: 35px;
   float: right;
-  text-align: right;
+}
+
+.task .menu:after {
+  clear: both;
+  content: '';
+  display: block;
+}
+
+.task .menu > .dropdown {
+  float: right;
 }
 
 .task .menu > .dropdown > button {
@@ -42,4 +51,12 @@
 
 .task .menu .caret {
   display: none; /* remove default bootstrap caret from dropdown */
+}
+
+.task .menu > .btn {
+  padding: 0;
+  display: inline-block;
+  color: #000;
+  text-align: left;
+  float: left;
 }

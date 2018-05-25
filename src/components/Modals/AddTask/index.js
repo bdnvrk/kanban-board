@@ -1,21 +1,30 @@
 import React, {Component} from 'react';
 import { Button, Modal, Form } from 'react-bootstrap';
 import { Field, reduxForm } from 'redux-form';
-import FieldWithErrors from '../FieldWithErrors';
-import { isNotEmpty, maxLength20 } from '../../validation';
+import FieldWithErrors from '../../FieldWithErrors';
+import { isNotEmpty, maxLength30, isNotPastDate } from '../../../validation';
+import priorityItems from '../../../constants/priorityItems';
 
-class EditTaskModal extends Component {
+class AddTaskModal extends Component {
+  componentWillReceiveProps(nextProps) {
+    if (this.props.showModal !== nextProps.showModal) {
+      this.props.initialize();
+    }
+  }
   getUsersList = () => {
     const { users } = this.props;
     return Object.keys(users).map(user => (
-      <option key={user} value={user}>{users[user]}</option>
+      <option value={user}>{users[user]}</option>
     ));
   }
   render() {
-    const { showModal, editTask, toggleModal, handleSubmit, taskId } = this.props;
+    const { showModal, toggleModal, handleSubmit, listId, reset, combineAddTask } = this.props;
     const onSubmit = handleSubmit(data => {
-      editTask(taskId, data);
+      const taskId = window.getTaskId();
+      
+      combineAddTask(listId, taskId, data)
       toggleModal();
+      reset();
     });
     return (
       <form onSubmit={onSubmit}>
@@ -30,7 +39,7 @@ class EditTaskModal extends Component {
                 name="name"
                 component={FieldWithErrors}
                 type="text"
-                validate={[isNotEmpty, maxLength20]}
+                validate={[isNotEmpty, maxLength30]}
               />
               <Field
                 label="Opis"
@@ -49,17 +58,16 @@ class EditTaskModal extends Component {
                 validate={[isNotEmpty]}
               >
                 <option value="">Wybierz</option>
-                <option value="low">Niski</option>
-                <option value="medium">Średni</option>
-                <option value="high">Wysoki</option>
-                <option value="urgent">Natychmiastowy</option>
+                {priorityItems.map(item => (
+                  <option value={item.value}>{item.label}</option>
+                ))}
               </Field>
               <Field
                 label="Termin wykoniania"
                 name="deadline"
                 component={FieldWithErrors}
                 type="date"
-                validate={[isNotEmpty]}
+                validate={[isNotEmpty, isNotPastDate]}
               />
               <Field
                 label="Przypisz do"
@@ -75,7 +83,7 @@ class EditTaskModal extends Component {
             </Form>
           </Modal.Body>
           <Modal.Footer>
-            <Button onClick={onSubmit} type="submit">Zapisz</Button>
+            <Button onClick={onSubmit} type="submit">Dodaj</Button>
             <Button onClick={toggleModal}>Anuluj</Button>
           </Modal.Footer>
         </Modal>
@@ -89,4 +97,4 @@ export default reduxForm({
   enableReinitialize: true,
   destroyOnUnmount: false,
   keepDirtyOnReinitialize: true,
-})(EditTaskModal)
+})(AddTaskModal)

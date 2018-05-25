@@ -8,8 +8,8 @@ import filter from 'lodash/fp/filter';
 import Panel from 'react-bootstrap/lib/Panel';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 import FontAwesome from 'react-fontawesome';
-import AddTaskModal from '../AddTaskModal';
-import EditListModal from '../EditListModal';
+import AddTaskModal from '../Modals/AddTask';
+import EditListModal from '../Modals/EditList';
 import Task from '../Task';
 import './style.css';
 
