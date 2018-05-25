@@ -65,7 +65,7 @@ class Header extends Component {
           <Nav pullRight className="headerForm">
             {this.renderLogutButton()}
           </Nav>
-          <Nav pullRight>
+          <Nav pullRight className="userInfo">
             <Navbar.Text>
               { isUserAuthorized ? `Jesteś zalogowany jako: ${ userName }` : '' }
             </Navbar.Text>
