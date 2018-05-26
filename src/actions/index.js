@@ -138,6 +138,13 @@ export const moveTask = (taskId, currentListId, nextListId) => ({
   payload: { taskId, currentListId, nextListId },
 });
 
+export const combineMoveTask = (taskId, currentListId, nextListId) => {
+  return dispatch => {
+    dispatch(moveTask(taskId, currentListId, nextListId));
+    dispatch(updateDatabase());
+  }
+}
+
 export const combineRemoveSingleTask = (taskId, listId) => {
   return dispatch => {
     dispatch(removeSingleTask(taskId, listId));
