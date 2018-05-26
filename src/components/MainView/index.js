@@ -2,22 +2,28 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import Board from '../Board';
 import IntroView from '../IntroView';
-import { startAuthorization } from '../../actions';
+import { startAuthorization, authorizeUser } from '../../actions';
+import * as firebase from 'firebase';
 
 class MainView extends Component {
 
-  // constructor() {
-  //   super();
-  //   this.authFunction = this.authFunction.bind(this);
-  // }
+  checkIfLoggedIn() {
+    firebase.auth().onAuthStateChanged((user) => {
+      console.log(user);
+      if(user) {
+        console.log('test')
+        this.props.authorizeUser(user);
+      }
+    })
+  }
 
-  // authFunction(e) {
-  //   e.preventDefault();
-  //   this.props.startAuthorization();
-  // }
+  componentWillMount() {
+    this.checkIfLoggedIn();
+  }
 
   renderMainView() {    
     const { authorization } = this.props;
+
 
     if(authorization.user.loggedIn) {
       return <Board />
@@ -40,7 +46,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-  startAuthorization
+  startAuthorization,
+  authorizeUser
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainView);

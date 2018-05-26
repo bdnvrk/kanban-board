@@ -14,7 +14,9 @@ export default function autorization(state = initialState, action) {
     case REQUEST_AUTHORIZATION: {
       return {
         ...state,
-        authorizationOngoing: true
+        user: {
+          authorizationOngoing: true
+        }
       }
     }
     case AUTHORIZE_USER: {

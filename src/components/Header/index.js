@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { startAuthorization, requestLogout, toggleFilter } from '../../actions'
 import { Navbar, Nav, Button, Modal } from 'react-bootstrap';
 import { addNewList } from '../../actions';
+import get from 'lodash/fp/get';
 import './style.css';
 
 class Header extends Component {
@@ -107,7 +108,7 @@ class Header extends Component {
 const mapStateToProps = (state) => (
   {
     isUserAuthorized: state.authorization.user.loggedIn,
-    userName: state.authorization.user.userData.displayName,
+    userName: get('authorization.user.userData.displayName')(state),
     filterEnabled: state.filterEnabled,
   }
 );
