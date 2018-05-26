@@ -30,9 +30,7 @@ const requestAuthorization = () => ({
 
 export const checkSession = () => {
   let userLoggedIn = firebase.auth().currentUser;
-  console.log(firebase.auth().currentUser)
   return dispatch => {
-    console.log('test3')
     if (userLoggedIn) {
       dispatch(authorizeUser(userLoggedIn));
     }
