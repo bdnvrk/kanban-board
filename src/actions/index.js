@@ -64,7 +64,7 @@ export const addNewTask = (listId, taskId, taskData) => ({
   payload: { listId, taskId, taskData },
 });
 
-export const editList = (id, listData) => ({
+const editList = (id, listData) => ({
   type: types.EDIT_LIST,
   payload: { id, listData },
 });
@@ -145,10 +145,24 @@ export const combineRemoveSingleTask = (taskId, listId) => {
   }
 }
 
-export const editTask = (id, taskData) => ({
+const editTask = (id, taskData) => ({
   type: types.EDIT_TASK,
   payload: { id, taskData },
 });
+
+export const combineEditTask = (id, taskData) => {
+  return dispatch => {
+    dispatch(editTask(id, taskData));
+    dispatch(updateDatabase());
+  }
+}
+
+export const combineEditList = (id, listData) => {
+  return dispatch => {
+    dispatch(editList(id, listData));
+    dispatch(updateDatabase());
+  }
+}
 
 export const toggleFilter = () => ({
   type: types.TOGGLE_FILTER,
