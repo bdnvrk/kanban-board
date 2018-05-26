@@ -11,7 +11,7 @@ import {
   combineRemoveSingleTask,
   getDataFromDb,
   combineEditTask,
-  moveTask,
+  combineMoveTask,
 } from '../../actions';
 import './style.css';
 
@@ -41,7 +41,7 @@ class Board extends Component {
               listsNumber={listsNumber}
               tasks={list.tasks} 
               lists={lists}
-              moveTask={this.props.moveTask}
+              moveTask={this.props.combineMoveTask}
             />
           );
         })}   
@@ -62,7 +62,7 @@ const mapDispatchToProps = {
   combineEditTask,
   combineRemoveSingleTask,
   getDataFromDb,
-  moveTask,
+  combineMoveTask,
 };
 
 const ConnectedComponent = connect(mapStateToProps, mapDispatchToProps)(Board);
