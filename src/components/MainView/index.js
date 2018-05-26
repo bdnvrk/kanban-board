@@ -2,52 +2,55 @@ import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import Board from '../Board';
 import IntroView from '../IntroView';
-import { startAuthorization, authorizeUser } from '../../actions';
+import { startAuthorization, authorizeUser, toggleLoader } from '../../actions';
 import * as firebase from 'firebase';
+import Loader from '../Loader';
 
 class MainView extends Component {
 
   checkIfLoggedIn() {
+    const { toggleLoader } = this.props;
     firebase.auth().onAuthStateChanged((user) => {
-      console.log(user);
       if(user) {
-        console.log('test')
         this.props.authorizeUser(user);
       }
-    })
+      toggleLoader(); 
+    });
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.checkIfLoggedIn();
   }
 
   renderMainView() {    
     const { authorization } = this.props;
-
-
-    if(authorization.user.loggedIn) {
+    
+    if (authorization.user.loggedIn) {
       return <Board />
     } else {
       return <IntroView authFunction={this.props.startAuthorization}/>
     }
   }
-
+  
   render() {
+    const { loader } = this.props;
     return ( 
       <React.Fragment>
-        {this.renderMainView()}
+        {loader ? <Loader/> : this.renderMainView()}
       </React.Fragment>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  authorization: state.authorization
+  authorization: state.authorization,
+  loader: state.loader
 });
 
 const mapDispatchToProps = {
   startAuthorization,
-  authorizeUser
+  authorizeUser,
+  toggleLoader
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainView);

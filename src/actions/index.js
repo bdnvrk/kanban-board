@@ -178,3 +178,8 @@ export const combineEditList = (id, listData) => {
 export const toggleFilter = () => ({
   type: types.TOGGLE_FILTER,
 });
+
+
+export const toggleLoader = () => ({
+  type: types.TOGGLE_LOADER
+})
