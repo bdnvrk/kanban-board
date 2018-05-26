@@ -12,3 +12,11 @@
   content: '';
   display: block;
 }
+
+@media only screen and (max-device-width : 768px) {
+  .board {
+    display: block;
+    height: auto;
+    overflow: visible;
+  }
+}

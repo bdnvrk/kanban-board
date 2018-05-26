@@ -80,3 +80,13 @@
 .mask.isOver {
   background: rgba(24, 201, 65, 0.15);
 }
+
+@media only screen and (max-device-width : 768px) {
+  .list {
+    width: 100%;
+  }
+
+  .list .panel {
+    margin-bottom: 10px;
+  }
+}
