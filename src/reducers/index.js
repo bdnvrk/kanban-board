@@ -6,6 +6,8 @@ import tasks from './tasks';
 import databaseConnection from './databaseConnection';
 import users from './users';
 import filterEnabled from './filter';
+import loader from './loader';
+
 
 export default combineReducers({
   authorization,
@@ -15,4 +17,5 @@ export default combineReducers({
   databaseConnection,
   users,
   filterEnabled,
+  loader
 });

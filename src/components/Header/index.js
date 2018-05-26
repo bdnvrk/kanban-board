@@ -4,6 +4,7 @@ import { Navbar, Nav, Button, Modal } from 'react-bootstrap';
 import get from 'lodash/fp/get';
 import { startAuthorization, requestLogout, toggleFilter } from '../../actions'
 import { addNewList } from '../../actions';
+import get from 'lodash/fp/get';
 import './style.css';
 
 class Header extends Component {

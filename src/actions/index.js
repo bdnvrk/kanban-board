@@ -28,6 +28,15 @@ const requestAuthorization = () => ({
   type: types.REQUEST_AUTHORIZATION
 });
 
+export const checkSession = () => {
+  let userLoggedIn = firebase.auth().currentUser;
+  return dispatch => {
+    if (userLoggedIn) {
+      dispatch(authorizeUser(userLoggedIn));
+    }
+  }
+}
+
 export const startAuthorization = () => {
   return dispatch => {
     dispatch(requestAuthorization());
@@ -174,3 +183,8 @@ export const combineEditList = (id, listData) => {
 export const toggleFilter = () => ({
   type: types.TOGGLE_FILTER,
 });
+
+
+export const toggleLoader = () => ({
+  type: types.TOGGLE_LOADER
+})
