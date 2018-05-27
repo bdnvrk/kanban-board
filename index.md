@@ -9,7 +9,7 @@
 
  - [Repozytorium github](https://github.com/marcint339/kanban-board)
  - [Działająca aplikacja](https://trello.com/b/cxKL9Nkp)
- - [Prototyp]([https://app.moqups.com/piotr.chrupcala@gmail.com/RyX1sfNeFk/view/page/a51fb7c78?ui=0](https://app.moqups.com/piotr.chrupcala@gmail.com/RyX1sfNeFk/view/page/a51fb7c78?ui=0))
+ - [Prototyp](https://app.moqups.com/piotr.chrupcala@gmail.com/RyX1sfNeFk/view/page/a51fb7c78?ui=0)
  - [System zarządzania Trello](https://trello.com/b/cxKL9Nkp)
  - [Raport](https://docs.google.com/document/d/1t7U8FLsa1KPk--bgvUZn1yvYQ2exiwVEEQt5l8NmMao/edit?usp=sharing)
 
