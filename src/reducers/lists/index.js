@@ -99,7 +99,13 @@ export default (state = [], action) => {
       return updatedState;
     }
     case SAVED_DATA_FROM_DATABASE: {
-      return get('data.lists')(action) || [];
+      const lists = get('data.lists')(action);
+      if (!lists) return [];
+
+      return lists.map(list => {
+        if (!list.tasks) list.tasks = [];
+        return list;
+      });
     }
     default:
       return state
