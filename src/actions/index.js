@@ -127,6 +127,14 @@ export const combineAddTask = (listId, taskId, taskData) => {
     dispatch(updateDatabase());
   }
 }
+
+export const combinedAddList = (name) => {
+  return dispatch => {
+    dispatch(addNewList(name));
+    dispatch(updateDatabase());
+  }
+}
+
 const removeList = id => ({
   type: types.REMOVE_LIST,
   payload: { id },

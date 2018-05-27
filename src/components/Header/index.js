@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Navbar, Nav, Button, Modal } from 'react-bootstrap';
 import get from 'lodash/fp/get';
 import { startAuthorization, requestLogout, toggleFilter } from '../../actions'
-import { addNewList } from '../../actions';
+import { combinedAddList } from '../../actions';
 import './style.css';
 
 class Header extends Component {
@@ -41,7 +41,7 @@ class Header extends Component {
 
   addList = () => {
     const value = this.textInput.current.value;
-    this.props.addNewList(value);
+    this.props.combinedAddList(value);
     this.toggleModal();
   }
 
@@ -114,7 +114,7 @@ const mapStateToProps = (state) => (
 );
 
 const mapDispatchToProps = {
-  addNewList,
+  combinedAddList,
   startAuthorization,
   requestLogout,
   toggleFilter,
